@@ -1,0 +1,24 @@
+1505209689a:1:{s:15:"site/footer.htm";a:5:{s:8:"fileName";s:15:"site/footer.htm";s:7:"content";s:731:"<div class="row">
+  <div class="large-10 columns">
+    <ul class="footer_menu">
+      <li><a href="offer-Rentkomplekt.pdf" target="_blank" class="translate-it" key="service_offer">Оферта сервиса</a></li>
+      <li><a href="offer-brs.pdf" target="_blank" class="translate-it" key="brs_for_cross-boarders">Оферта эквайера БРС для кросс бордеров</a></li>
+      <li><a href="offer-binbank.pdf" target="_blank" class="translate-it" key="offer_of_the_acquirer">Оферта эквайера Бинбанка для российских переводов</a></li>
+    </ul>
+  </div>
+  <div class="large-2 columns">
+     <span class="copyright">© 2017 Perevedi.online</span>
+  </div>
+</div>
+";s:5:"mtime";i:1505207837;s:6:"markup";s:730:"<div class="row">
+  <div class="large-10 columns">
+    <ul class="footer_menu">
+      <li><a href="offer-Rentkomplekt.pdf" target="_blank" class="translate-it" key="service_offer">Оферта сервиса</a></li>
+      <li><a href="offer-brs.pdf" target="_blank" class="translate-it" key="brs_for_cross-boarders">Оферта эквайера БРС для кросс бордеров</a></li>
+      <li><a href="offer-binbank.pdf" target="_blank" class="translate-it" key="offer_of_the_acquirer">Оферта эквайера Бинбанка для российских переводов</a></li>
+    </ul>
+  </div>
+  <div class="large-2 columns">
+     <span class="copyright">© 2017 Perevedi.online</span>
+  </div>
+</div>";s:4:"code";N;}}

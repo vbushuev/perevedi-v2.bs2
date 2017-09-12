@@ -1,0 +1,83 @@
+<div class="reveal large popup" id="support" data-reveal>
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="popup_h2 translate-it" key="support_service_of_the_payer">служба поддержки плательщика</h2>
+            <p class="translate-it" key="carried_out_a_bank_transfer">Осуществляли перевод у нас? Вы можете найти полную информацию о ваших переводах</p>
+        </div>
+    </div>
+    <form action="#!" data-abide>
+        <div class="row">
+            <div class="large-3 columns">
+                <span class="popup_label_desc translate-it" key="card">карта</span>
+            </div>
+            <div class="large-7 end columns">
+                <div class="row">
+                    <div class="large-5 columns">
+                        <input type="number" class="first-six" placeholder="ПЕРВЫЕ 6" required="required">
+                    </div>
+                    <div class="large-2 columns">
+                        <span class="popup_label__stars">*******</span>
+                    </div>
+                    <div class="large-5 columns">
+                        <input type="number" class="last-four" placeholder="ПОСЛЕДНИЕ 4" required="required">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-3 columns">
+                <span class="popup_label_desc translate-it" key="transfer_amount">сумма перевода</span>
+            </div>
+            <div class="large-7 end columns">
+                <input type="number" required="required">
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-3 columns">
+                <span class="popup_label_desc translate-it" key="date">дата</span>
+            </div>
+            <div class="large-7 end columns">
+                <input type="date" required="required">
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-3 columns">
+                <span class="popup_label_desc translate-it" key="your_email">ваш e-mail</span>
+            </div>
+            <div class="large-7 end columns">
+                <input type="email" pattern="email" required="required">
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-3 columns">
+                <span class="popup_label_desc translate-it" key="message">сообщение</span>
+            </div>
+            <div class="large-7 end columns">
+                <textarea rows="4"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-3 columns">
+                <span class="popup_label_desc translate-it" key="capcha">код рисунка</span>
+            </div>
+            <div class="large-7 end columns">
+                <div class="row">
+                    <div class="large-3 columns">
+                        <span class="capcha"><img src="{{ 'assets/img/capcha.png'|theme }}" alt="capcha"></span>
+                    </div>
+                    <div class="large-4 columns end">
+                        <input type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-3 large-centered columns">
+                <button class="button expanded success-operation-button translate-it" key="send">отправить</button>
+            </div>
+        </div>
+    </form>
+    <button class="close-button" data-close aria-label="Close reveal" type="button">
+        <span aria-hidden="true"><i class="icn-close"></i></span>
+    </button>
+</div><!-- END POPUP -->
