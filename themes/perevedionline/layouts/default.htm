@@ -10,6 +10,8 @@ description = "Default layout"
     <link rel="stylesheet" href="{{ 'assets/css/foundation.css'|theme }}">
     <link rel="stylesheet" href="{{ 'assets/css/app.css'|theme }}">
     <link rel="stylesheet" href="{{ 'assets/css/custom.css'|theme }}">
+    <link rel="stylesheet" href="{{ 'assets/vsb/css/style.css'|theme }}">
+
     <!-- favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ 'assets/img/favicons/apple-touch-icon.png'|theme }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ 'assets/img/favicons/favicon-32x32.png'|theme }}">
@@ -45,5 +47,10 @@ description = "Default layout"
     <script src="{{ 'assets/js/app.js'|theme }}"></script>
     <script src="{{ 'assets/js/locale.js'|theme }}"></script>
     <script src="{{ 'assets/js/functions.js'|theme }}"></script>
+
+    <script src="{{ 'assets/vsb/js/app.js'|theme }}"></script>
+
+
+    {% framework extras %}
   </body>
 </html>

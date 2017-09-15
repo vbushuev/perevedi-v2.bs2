@@ -35,198 +35,140 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
         // line 10
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/css/custom.css");
         echo "\">
+    <link rel=\"stylesheet\" href=\"";
+        // line 11
+        echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/vsb/css/style.css");
+        echo "\">
+
     <!-- favicons -->
     <link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"";
-        // line 12
+        // line 14
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/img/favicons/apple-touch-icon.png");
         echo "\">
     <link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"";
-        // line 13
+        // line 15
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/img/favicons/favicon-32x32.png");
         echo "\">
     <link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"";
-        // line 14
+        // line 16
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/img/favicons/favicon-16x16.png");
         echo "\">
     <link rel=\"manifest\" href=\"";
-        // line 15
+        // line 17
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/img/favicons/manifest.json");
         echo "\">
     <link rel=\"mask-icon\" href=\"";
-        // line 16
+        // line 18
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/img/favicons/safari-pinned-tab.svg");
         echo "\" color=\"#5bbad5\">
-    <link rel=\"shortcut icon\" href=\"favicon.ico\"/>
+    <link rel=\"shortcut icon\" href=\"";
+        // line 19
+        echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/favicon.ico");
+        echo "\"/>
     <meta name=\"theme-color\" content=\"#ffffff\">
 </head>
 <body>
     <div class=\"loader\">
         <img src=\"";
-        // line 22
+        // line 24
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/img/loader.gif");
         echo "\" alt=\"\">
     </div>
     <section class=\"hero\">
         <header class=\"header\">
             ";
-        // line 26
+        // line 28
         $context['__cms_partial_params'] = [];
         echo $this->env->getExtension('CMS')->partialFunction("site/header"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 27
+        // line 29
         echo "        </header>
         ";
-        // line 28
+        // line 30
         echo $this->env->getExtension('CMS')->pageFunction();
-        // line 29
+        // line 31
         echo "    </section>
     ";
-        // line 30
+        // line 32
         $context['__cms_partial_params'] = [];
         echo $this->env->getExtension('CMS')->partialFunction("site/about-service"        , $context['__cms_partial_params']        );
-        unset($context['__cms_partial_params']);
-        // line 31
-        echo "    ";
-        $context['__cms_partial_params'] = [];
-        echo $this->env->getExtension('CMS')->partialFunction("site/conditions"        , $context['__cms_partial_params']        );
-        unset($context['__cms_partial_params']);
-        // line 32
-        echo "    ";
-        $context['__cms_partial_params'] = [];
-        echo $this->env->getExtension('CMS')->partialFunction("site/faq"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
         // line 33
         echo "    ";
         $context['__cms_partial_params'] = [];
-        echo $this->env->getExtension('CMS')->partialFunction("site/contacts"        , $context['__cms_partial_params']        );
+        echo $this->env->getExtension('CMS')->partialFunction("site/conditions"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
         // line 34
-        echo "
-  <footer class=\"footer\">
-        ";
+        echo "    ";
+        $context['__cms_partial_params'] = [];
+        echo $this->env->getExtension('CMS')->partialFunction("site/faq"        , $context['__cms_partial_params']        );
+        unset($context['__cms_partial_params']);
+        // line 35
+        echo "    ";
+        $context['__cms_partial_params'] = [];
+        echo $this->env->getExtension('CMS')->partialFunction("site/contacts"        , $context['__cms_partial_params']        );
+        unset($context['__cms_partial_params']);
         // line 36
+        echo "    <footer class=\"footer\">
+        ";
+        // line 37
         $context['__cms_partial_params'] = [];
         echo $this->env->getExtension('CMS')->partialFunction("site/footer"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 37
+        // line 38
         echo "    </footer>
-  <div class=\"reveal large popup\" id=\"support\" data-reveal>
-    <div class=\"row\">
-      <div class=\"large-12 columns\">
-        <h2 class=\"popup_h2 translate-it\" key=\"support_service_of_the_payer\">служба поддержки плательщика</h2>
-        <p class=\"translate-it\" key=\"carried_out_a_bank_transfer\">Осуществляли перевод у нас? Вы можете найти полную информацию о ваших переводах</p>
-      </div>
-    </div>
-    <form action=\"#!\" data-abide>
-      <div class=\"row\">
-        <div class=\"large-3 columns\">
-          <span class=\"popup_label_desc translate-it\" key=\"card\">карта</span>
-        </div>
-        <div class=\"large-7 end columns\">
-          <div class=\"row\">
-            <div class=\"large-5 columns\">
-              <input type=\"number\" class=\"first-six\" placeholder=\"ПЕРВЫЕ 6\" required=\"required\">
-            </div>
-            <div class=\"large-2 columns\">
-              <span class=\"popup_label__stars\">*******</span>
-            </div>
-            <div class=\"large-5 columns\">
-              <input type=\"number\" class=\"last-four\" placeholder=\"ПОСЛЕДНИЕ 4\" required=\"required\">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class=\"row\">
-        <div class=\"large-3 columns\">
-          <span class=\"popup_label_desc translate-it\" key=\"transfer_amount\">сумма перевода</span>
-        </div>
-        <div class=\"large-7 end columns\">
-          <input type=\"number\" required=\"required\">
-        </div>
-      </div>
-      <div class=\"row\">
-        <div class=\"large-3 columns\">
-          <span class=\"popup_label_desc translate-it\" key=\"date\">дата</span>
-        </div>
-        <div class=\"large-7 end columns\">
-          <input type=\"date\" required=\"required\">
-        </div>
-      </div>
-      <div class=\"row\">
-        <div class=\"large-3 columns\">
-          <span class=\"popup_label_desc translate-it\" key=\"your_email\">ваш e-mail</span>
-        </div>
-        <div class=\"large-7 end columns\">
-          <input type=\"email\" pattern=\"email\" required=\"required\">
-        </div>
-      </div>
-      <div class=\"row\">
-        <div class=\"large-3 columns\">
-          <span class=\"popup_label_desc translate-it\" key=\"message\">сообщение</span>
-        </div>
-        <div class=\"large-7 end columns\">
-          <textarea rows=\"4\"></textarea>
-        </div>
-      </div>
-      <div class=\"row\">
-        <div class=\"large-3 columns\">
-          <span class=\"popup_label_desc translate-it\" key=\"capcha\">код рисунка</span>
-        </div>
-        <div class=\"large-7 end columns\">
-          <div class=\"row\">
-            <div class=\"large-3 columns\">
-              <span class=\"capcha\"><img src=\"";
-        // line 103
-        echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/img/capcha.png");
-        echo "\" alt=\"capcha\"></span>
-            </div>
-            <div class=\"large-4 columns end\">
-              <input type=\"text\">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class=\"row\">
-        <div class=\"large-3 large-centered columns\">
-          <button class=\"button expanded success-operation-button translate-it\" key=\"send\">отправить</button>
-        </div>
-      </div>
-    </form>
-
-
-    <button class=\"close-button\" data-close aria-label=\"Close reveal\" type=\"button\">
-      <span aria-hidden=\"true\"><i class=\"icn-close\"></i></span>
-    </button>
-  </div><!-- END POPUP -->
+    ";
+        // line 39
+        $context['__cms_partial_params'] = [];
+        echo $this->env->getExtension('CMS')->partialFunction("site/support"        , $context['__cms_partial_params']        );
+        unset($context['__cms_partial_params']);
+        // line 40
+        echo "
     <script src=\"";
-        // line 123
+        // line 41
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/jquery.js");
         echo "\"></script>
     <script src=\"";
-        // line 124
+        // line 42
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/what-input.js");
         echo "\"></script>
     <script src=\"";
-        // line 125
+        // line 43
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/foundation.js");
         echo "\"></script>
     <script src=\"";
-        // line 126
+        // line 44
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/jquery.cookie.js");
         echo "\"></script>
     <script src=\"";
-        // line 127
+        // line 45
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/app.js");
         echo "\"></script>
     <script src=\"";
-        // line 128
+        // line 46
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/locale.js");
         echo "\"></script>
     <script src=\"";
-        // line 129
+        // line 47
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/functions.js");
         echo "\"></script>
-  </body>
+
+    <script src=\"";
+        // line 49
+        echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/vsb/js/app.js");
+        echo "\"></script>
+
+
+    ";
+        // line 52
+        echo '<script src="'. Request::getBasePath()
+                .'/modules/system/assets/js/framework.js"></script>'.PHP_EOL;
+        echo '<script src="'. Request::getBasePath()
+                    .'/modules/system/assets/js/framework.extras.js"></script>'.PHP_EOL;
+        echo '<link rel="stylesheet" property="stylesheet" href="'. Request::getBasePath()
+                    .'/modules/system/assets/css/framework.extras.css">'.PHP_EOL;
+        // line 53
+        echo "  </body>
 </html>";
     }
 
@@ -242,7 +184,7 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
 
     public function getDebugInfo()
     {
-        return array (  227 => 129,  223 => 128,  219 => 127,  215 => 126,  211 => 125,  207 => 124,  203 => 123,  180 => 103,  112 => 37,  108 => 36,  104 => 34,  99 => 33,  94 => 32,  89 => 31,  85 => 30,  82 => 29,  80 => 28,  77 => 27,  73 => 26,  66 => 22,  57 => 16,  53 => 15,  49 => 14,  45 => 13,  41 => 12,  36 => 10,  32 => 9,  28 => 8,  19 => 1,);
+        return array (  171 => 53,  164 => 52,  158 => 49,  153 => 47,  149 => 46,  145 => 45,  141 => 44,  137 => 43,  133 => 42,  129 => 41,  126 => 40,  122 => 39,  119 => 38,  115 => 37,  112 => 36,  107 => 35,  102 => 34,  97 => 33,  93 => 32,  90 => 31,  88 => 30,  85 => 29,  81 => 28,  74 => 24,  66 => 19,  62 => 18,  58 => 17,  54 => 16,  50 => 15,  46 => 14,  40 => 11,  36 => 10,  32 => 9,  28 => 8,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -265,13 +207,15 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
     <link rel=\"stylesheet\" href=\"{{ 'assets/css/foundation.css'|theme }}\">
     <link rel=\"stylesheet\" href=\"{{ 'assets/css/app.css'|theme }}\">
     <link rel=\"stylesheet\" href=\"{{ 'assets/css/custom.css'|theme }}\">
+    <link rel=\"stylesheet\" href=\"{{ 'assets/vsb/css/style.css'|theme }}\">
+
     <!-- favicons -->
     <link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"{{ 'assets/img/favicons/apple-touch-icon.png'|theme }}\">
     <link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"{{ 'assets/img/favicons/favicon-32x32.png'|theme }}\">
     <link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"{{ 'assets/img/favicons/favicon-16x16.png'|theme }}\">
     <link rel=\"manifest\" href=\"{{ 'assets/img/favicons/manifest.json'|theme }}\">
     <link rel=\"mask-icon\" href=\"{{ 'assets/img/favicons/safari-pinned-tab.svg'|theme }}\" color=\"#5bbad5\">
-    <link rel=\"shortcut icon\" href=\"favicon.ico\"/>
+    <link rel=\"shortcut icon\" href=\"{{ 'assets/favicon.ico'|theme }}\"/>
     <meta name=\"theme-color\" content=\"#ffffff\">
 </head>
 <body>
@@ -288,95 +232,11 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
     {% partial 'site/conditions' %}
     {% partial 'site/faq' %}
     {% partial 'site/contacts' %}
-
-  <footer class=\"footer\">
+    <footer class=\"footer\">
         {% partial 'site/footer' %}
     </footer>
-  <div class=\"reveal large popup\" id=\"support\" data-reveal>
-    <div class=\"row\">
-      <div class=\"large-12 columns\">
-        <h2 class=\"popup_h2 translate-it\" key=\"support_service_of_the_payer\">служба поддержки плательщика</h2>
-        <p class=\"translate-it\" key=\"carried_out_a_bank_transfer\">Осуществляли перевод у нас? Вы можете найти полную информацию о ваших переводах</p>
-      </div>
-    </div>
-    <form action=\"#!\" data-abide>
-      <div class=\"row\">
-        <div class=\"large-3 columns\">
-          <span class=\"popup_label_desc translate-it\" key=\"card\">карта</span>
-        </div>
-        <div class=\"large-7 end columns\">
-          <div class=\"row\">
-            <div class=\"large-5 columns\">
-              <input type=\"number\" class=\"first-six\" placeholder=\"ПЕРВЫЕ 6\" required=\"required\">
-            </div>
-            <div class=\"large-2 columns\">
-              <span class=\"popup_label__stars\">*******</span>
-            </div>
-            <div class=\"large-5 columns\">
-              <input type=\"number\" class=\"last-four\" placeholder=\"ПОСЛЕДНИЕ 4\" required=\"required\">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class=\"row\">
-        <div class=\"large-3 columns\">
-          <span class=\"popup_label_desc translate-it\" key=\"transfer_amount\">сумма перевода</span>
-        </div>
-        <div class=\"large-7 end columns\">
-          <input type=\"number\" required=\"required\">
-        </div>
-      </div>
-      <div class=\"row\">
-        <div class=\"large-3 columns\">
-          <span class=\"popup_label_desc translate-it\" key=\"date\">дата</span>
-        </div>
-        <div class=\"large-7 end columns\">
-          <input type=\"date\" required=\"required\">
-        </div>
-      </div>
-      <div class=\"row\">
-        <div class=\"large-3 columns\">
-          <span class=\"popup_label_desc translate-it\" key=\"your_email\">ваш e-mail</span>
-        </div>
-        <div class=\"large-7 end columns\">
-          <input type=\"email\" pattern=\"email\" required=\"required\">
-        </div>
-      </div>
-      <div class=\"row\">
-        <div class=\"large-3 columns\">
-          <span class=\"popup_label_desc translate-it\" key=\"message\">сообщение</span>
-        </div>
-        <div class=\"large-7 end columns\">
-          <textarea rows=\"4\"></textarea>
-        </div>
-      </div>
-      <div class=\"row\">
-        <div class=\"large-3 columns\">
-          <span class=\"popup_label_desc translate-it\" key=\"capcha\">код рисунка</span>
-        </div>
-        <div class=\"large-7 end columns\">
-          <div class=\"row\">
-            <div class=\"large-3 columns\">
-              <span class=\"capcha\"><img src=\"{{ 'assets/img/capcha.png'|theme }}\" alt=\"capcha\"></span>
-            </div>
-            <div class=\"large-4 columns end\">
-              <input type=\"text\">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class=\"row\">
-        <div class=\"large-3 large-centered columns\">
-          <button class=\"button expanded success-operation-button translate-it\" key=\"send\">отправить</button>
-        </div>
-      </div>
-    </form>
+    {% partial 'site/support' %}
 
-
-    <button class=\"close-button\" data-close aria-label=\"Close reveal\" type=\"button\">
-      <span aria-hidden=\"true\"><i class=\"icn-close\"></i></span>
-    </button>
-  </div><!-- END POPUP -->
     <script src=\"{{ 'assets/js/vendor/jquery.js'|theme }}\"></script>
     <script src=\"{{ 'assets/js/vendor/what-input.js'|theme }}\"></script>
     <script src=\"{{ 'assets/js/vendor/foundation.js'|theme }}\"></script>
@@ -384,6 +244,11 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
     <script src=\"{{ 'assets/js/app.js'|theme }}\"></script>
     <script src=\"{{ 'assets/js/locale.js'|theme }}\"></script>
     <script src=\"{{ 'assets/js/functions.js'|theme }}\"></script>
+
+    <script src=\"{{ 'assets/vsb/js/app.js'|theme }}\"></script>
+
+
+    {% framework extras %}
   </body>
 </html>", "/Applications/AMPPS/www/perevedi-v2.bs2/themes/perevedionline/layouts/default.htm", "");
     }

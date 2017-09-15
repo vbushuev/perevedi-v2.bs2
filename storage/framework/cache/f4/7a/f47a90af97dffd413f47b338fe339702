@@ -1,4 +1,4 @@
-1505210274a:1:{s:11:"default.htm";a:6:{s:8:"fileName";s:11:"default.htm";s:7:"content";s:5595:"description = "Default layout"
+1505466417a:1:{s:11:"default.htm";a:6:{s:8:"fileName";s:11:"default.htm";s:7:"content";s:2401:"description = "Default layout"
 ==
 <!doctype html>
 <html class="no-js" lang="ru" dir="ltr">
@@ -10,13 +10,15 @@
     <link rel="stylesheet" href="{{ 'assets/css/foundation.css'|theme }}">
     <link rel="stylesheet" href="{{ 'assets/css/app.css'|theme }}">
     <link rel="stylesheet" href="{{ 'assets/css/custom.css'|theme }}">
+    <link rel="stylesheet" href="{{ 'assets/vsb/css/style.css'|theme }}">
+
     <!-- favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ 'assets/img/favicons/apple-touch-icon.png'|theme }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ 'assets/img/favicons/favicon-32x32.png'|theme }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ 'assets/img/favicons/favicon-16x16.png'|theme }}">
     <link rel="manifest" href="{{ 'assets/img/favicons/manifest.json'|theme }}">
     <link rel="mask-icon" href="{{ 'assets/img/favicons/safari-pinned-tab.svg'|theme }}" color="#5bbad5">
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="{{ 'assets/favicon.ico'|theme }}"/>
     <meta name="theme-color" content="#ffffff">
 </head>
 <body>
@@ -33,95 +35,11 @@
     {% partial 'site/conditions' %}
     {% partial 'site/faq' %}
     {% partial 'site/contacts' %}
-
-  <footer class="footer">
+    <footer class="footer">
         {% partial 'site/footer' %}
     </footer>
-  <div class="reveal large popup" id="support" data-reveal>
-    <div class="row">
-      <div class="large-12 columns">
-        <h2 class="popup_h2 translate-it" key="support_service_of_the_payer">служба поддержки плательщика</h2>
-        <p class="translate-it" key="carried_out_a_bank_transfer">Осуществляли перевод у нас? Вы можете найти полную информацию о ваших переводах</p>
-      </div>
-    </div>
-    <form action="#!" data-abide>
-      <div class="row">
-        <div class="large-3 columns">
-          <span class="popup_label_desc translate-it" key="card">карта</span>
-        </div>
-        <div class="large-7 end columns">
-          <div class="row">
-            <div class="large-5 columns">
-              <input type="number" class="first-six" placeholder="ПЕРВЫЕ 6" required="required">
-            </div>
-            <div class="large-2 columns">
-              <span class="popup_label__stars">*******</span>
-            </div>
-            <div class="large-5 columns">
-              <input type="number" class="last-four" placeholder="ПОСЛЕДНИЕ 4" required="required">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-3 columns">
-          <span class="popup_label_desc translate-it" key="transfer_amount">сумма перевода</span>
-        </div>
-        <div class="large-7 end columns">
-          <input type="number" required="required">
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-3 columns">
-          <span class="popup_label_desc translate-it" key="date">дата</span>
-        </div>
-        <div class="large-7 end columns">
-          <input type="date" required="required">
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-3 columns">
-          <span class="popup_label_desc translate-it" key="your_email">ваш e-mail</span>
-        </div>
-        <div class="large-7 end columns">
-          <input type="email" pattern="email" required="required">
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-3 columns">
-          <span class="popup_label_desc translate-it" key="message">сообщение</span>
-        </div>
-        <div class="large-7 end columns">
-          <textarea rows="4"></textarea>
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-3 columns">
-          <span class="popup_label_desc translate-it" key="capcha">код рисунка</span>
-        </div>
-        <div class="large-7 end columns">
-          <div class="row">
-            <div class="large-3 columns">
-              <span class="capcha"><img src="{{ 'assets/img/capcha.png'|theme }}" alt="capcha"></span>
-            </div>
-            <div class="large-4 columns end">
-              <input type="text">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-3 large-centered columns">
-          <button class="button expanded success-operation-button translate-it" key="send">отправить</button>
-        </div>
-      </div>
-    </form>
+    {% partial 'site/support' %}
 
-
-    <button class="close-button" data-close aria-label="Close reveal" type="button">
-      <span aria-hidden="true"><i class="icn-close"></i></span>
-    </button>
-  </div><!-- END POPUP -->
     <script src="{{ 'assets/js/vendor/jquery.js'|theme }}"></script>
     <script src="{{ 'assets/js/vendor/what-input.js'|theme }}"></script>
     <script src="{{ 'assets/js/vendor/foundation.js'|theme }}"></script>
@@ -129,9 +47,14 @@
     <script src="{{ 'assets/js/app.js'|theme }}"></script>
     <script src="{{ 'assets/js/locale.js'|theme }}"></script>
     <script src="{{ 'assets/js/functions.js'|theme }}"></script>
+
+    <script src="{{ 'assets/vsb/js/app.js'|theme }}"></script>
+
+
+    {% framework extras %}
   </body>
 </html>
-";s:5:"mtime";i:1505209666;s:6:"markup";s:5560:"<!doctype html>
+";s:5:"mtime";i:1505220187;s:6:"markup";s:2366:"<!doctype html>
 <html class="no-js" lang="ru" dir="ltr">
 <head>
     <meta charset="utf-8">
@@ -141,13 +64,15 @@
     <link rel="stylesheet" href="{{ 'assets/css/foundation.css'|theme }}">
     <link rel="stylesheet" href="{{ 'assets/css/app.css'|theme }}">
     <link rel="stylesheet" href="{{ 'assets/css/custom.css'|theme }}">
+    <link rel="stylesheet" href="{{ 'assets/vsb/css/style.css'|theme }}">
+
     <!-- favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ 'assets/img/favicons/apple-touch-icon.png'|theme }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ 'assets/img/favicons/favicon-32x32.png'|theme }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ 'assets/img/favicons/favicon-16x16.png'|theme }}">
     <link rel="manifest" href="{{ 'assets/img/favicons/manifest.json'|theme }}">
     <link rel="mask-icon" href="{{ 'assets/img/favicons/safari-pinned-tab.svg'|theme }}" color="#5bbad5">
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="{{ 'assets/favicon.ico'|theme }}"/>
     <meta name="theme-color" content="#ffffff">
 </head>
 <body>
@@ -164,95 +89,11 @@
     {% partial 'site/conditions' %}
     {% partial 'site/faq' %}
     {% partial 'site/contacts' %}
-
-  <footer class="footer">
+    <footer class="footer">
         {% partial 'site/footer' %}
     </footer>
-  <div class="reveal large popup" id="support" data-reveal>
-    <div class="row">
-      <div class="large-12 columns">
-        <h2 class="popup_h2 translate-it" key="support_service_of_the_payer">служба поддержки плательщика</h2>
-        <p class="translate-it" key="carried_out_a_bank_transfer">Осуществляли перевод у нас? Вы можете найти полную информацию о ваших переводах</p>
-      </div>
-    </div>
-    <form action="#!" data-abide>
-      <div class="row">
-        <div class="large-3 columns">
-          <span class="popup_label_desc translate-it" key="card">карта</span>
-        </div>
-        <div class="large-7 end columns">
-          <div class="row">
-            <div class="large-5 columns">
-              <input type="number" class="first-six" placeholder="ПЕРВЫЕ 6" required="required">
-            </div>
-            <div class="large-2 columns">
-              <span class="popup_label__stars">*******</span>
-            </div>
-            <div class="large-5 columns">
-              <input type="number" class="last-four" placeholder="ПОСЛЕДНИЕ 4" required="required">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-3 columns">
-          <span class="popup_label_desc translate-it" key="transfer_amount">сумма перевода</span>
-        </div>
-        <div class="large-7 end columns">
-          <input type="number" required="required">
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-3 columns">
-          <span class="popup_label_desc translate-it" key="date">дата</span>
-        </div>
-        <div class="large-7 end columns">
-          <input type="date" required="required">
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-3 columns">
-          <span class="popup_label_desc translate-it" key="your_email">ваш e-mail</span>
-        </div>
-        <div class="large-7 end columns">
-          <input type="email" pattern="email" required="required">
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-3 columns">
-          <span class="popup_label_desc translate-it" key="message">сообщение</span>
-        </div>
-        <div class="large-7 end columns">
-          <textarea rows="4"></textarea>
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-3 columns">
-          <span class="popup_label_desc translate-it" key="capcha">код рисунка</span>
-        </div>
-        <div class="large-7 end columns">
-          <div class="row">
-            <div class="large-3 columns">
-              <span class="capcha"><img src="{{ 'assets/img/capcha.png'|theme }}" alt="capcha"></span>
-            </div>
-            <div class="large-4 columns end">
-              <input type="text">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-3 large-centered columns">
-          <button class="button expanded success-operation-button translate-it" key="send">отправить</button>
-        </div>
-      </div>
-    </form>
+    {% partial 'site/support' %}
 
-
-    <button class="close-button" data-close aria-label="Close reveal" type="button">
-      <span aria-hidden="true"><i class="icn-close"></i></span>
-    </button>
-  </div><!-- END POPUP -->
     <script src="{{ 'assets/js/vendor/jquery.js'|theme }}"></script>
     <script src="{{ 'assets/js/vendor/what-input.js'|theme }}"></script>
     <script src="{{ 'assets/js/vendor/foundation.js'|theme }}"></script>
@@ -260,5 +101,10 @@
     <script src="{{ 'assets/js/app.js'|theme }}"></script>
     <script src="{{ 'assets/js/locale.js'|theme }}"></script>
     <script src="{{ 'assets/js/functions.js'|theme }}"></script>
+
+    <script src="{{ 'assets/vsb/js/app.js'|theme }}"></script>
+
+
+    {% framework extras %}
   </body>
 </html>";s:4:"code";N;s:11:"description";s:14:"Default layout";}}

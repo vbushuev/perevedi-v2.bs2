@@ -1,0 +1,19 @@
+// out: style.css
+#iframeoverlay
+    display: none;
+    position: absolute;
+    width:100%;
+    height: 100%;
+    top:0;
+    left:0;
+    z-index: 50;
+    background-color: rgba(0,0,0,.6);
+    // filter: blur(10px);
+    transition: all .4s ease-in;
+    iframe
+        width:100%;
+        height:100%;
+        border: none;
+        overflow: hidden;
+        display: block;
+        z-index: 10;

@@ -1,0 +1,10 @@
+{% if success %}
+<iframe src="{{redirect}}"></iframe>
+<script>
+$("#iframeoverlay").show();
+</script>
+{% else %}
+<script>
+    console.debug('no success in response');
+</script>
+{% endif%}

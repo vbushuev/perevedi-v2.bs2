@@ -45,4 +45,7 @@ return array(
     'ClassPreloader\\' => array($vendorDir . '/classpreloader/classpreloader/src'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'Backend\\' => array($baseDir . '/modules/backend'),
+    'core\\' => array( $vendorDir. '/garan24/src/core'),
+    'db\\' => array( $vendorDir. '/garan24/src/db'),
+    'Garan24\\' => array( $vendorDir. '/garan24/src/Garan24'),
 );
