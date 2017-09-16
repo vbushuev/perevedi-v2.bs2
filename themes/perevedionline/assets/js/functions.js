@@ -10,7 +10,9 @@ $('.lang').click(function(e) {
 	e.preventDefault();
 	//переключение локали
 	var lang = $(this).attr('id');
+	$('[name=lang]').val(lang);
 	$.cookie('curLang', lang);
+
 
 //правим перевод placeholder
 if (lang === 'ukr') {
@@ -22,13 +24,13 @@ if (lang === 'ukr') {
 }
 
 //правим перевод placeholder главный экран
-if (lang === 'ukr') {
-	$('.card-wrap_card_input__summ').attr('placeholder', 'СУМА ПЕРЕКАЗУ');
-} else if (lang === 'eng') {
-	$('.card-wrap_card_input__summ').attr('placeholder', 'TRANSFER AMOUNT');
-} else {
-	$('.card-wrap_card_input__summ').attr('placeholder', 'СУММА ПЕРЕВОДА');
-}
+// if (lang === 'ukr') {
+// 	$('.card-wrap_card_input__summ').attr('placeholder', 'СУМА ПЕРЕКАЗУ');
+// } else if (lang === 'eng') {
+// 	$('.card-wrap_card_input__summ').attr('placeholder', 'TRANSFER AMOUNT');
+// } else {
+// 	$('.card-wrap_card_input__summ').attr('placeholder', 'СУММА ПЕРЕВОДА');
+// }
 
 //правим email-input в успешном переводе
 if (lang === 'ukr') {
@@ -105,7 +107,7 @@ if (lang === 'ukr') {
 	$('.card-wrap_card_input__text').text('CARD NUMBER');
 } else {
 	$('.card-wrap_card_input__text').text('НОМЕР КАРТЫ');
-}	
+}
 	};
 //end проверка есть ли что в куки
 

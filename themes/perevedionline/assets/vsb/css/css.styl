@@ -17,3 +17,29 @@
         overflow: hidden;
         display: block;
         z-index: 10;
+.input-form-field
+    margin-top: 12px;
+    position: relative;
+    font-size: 24px;
+    .input-form-field-label
+        position: absolute;
+        color:rgba(0,0,0,.3);
+        top: 16px;
+        left:16px;
+        text-transform: uppercase;
+        transition: all .2s ease-in;
+        pointer-events: none;
+    .input-form-field-value
+        font-size: 21px;
+.input-form-field.focused
+    .input-form-field-label
+        color:rgba(255,255,255,.8);
+        top:-32px;
+        text-transform: none;
+        font-size: 18px;
+.input-form-field.invalid.show-invalid
+    .input-form-field-value input
+        border:solid 4px rgba(255,0,0,1);
+.error-response
+    color: rgba(255,0,0,.8);
+    font-size: 90%;

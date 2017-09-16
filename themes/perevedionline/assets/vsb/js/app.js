@@ -1,4 +1,33 @@
 "use strict";
+var getParam = (function(){
+    return function(n){
+        var searchstr = (ORDERDESCRIPTION!=undefined)?ORDERDESCRIPTION:location.search;
+        var p = searchstr.split(n+'=')[1];
+        if(p!=undefined){
+            p = p.split('&')[0];
+        }
+        return p;
+    }
+})();
+var LuhnCheck = (function(){
+    var luhnArr = [0, 2, 4, 6, 8, 1, 3, 5, 7, 9];
+    return function(str){
+        var counter = 0;
+        var incNum;
+        var odd = false;
+        var temp = String(str).replace(/[^\d]/g, "");
+
+        if ( temp.length == 0)
+            return false;
+        for (var i = temp.length-1; i >= 0; --i)
+        {
+            incNum = parseInt(temp.charAt(i), 10);
+            counter += (odd = !odd)? incNum : luhnArr[incNum];
+        }
+        console.debug('check pan '+str+' '+((counter%10 == 0)?'OK':'failed'));
+        return (counter%10 == 0);
+    }
+})();
 var po = {
     options:{
         fee:{
@@ -48,10 +77,12 @@ var po = {
         };
         // console.debug(opt);
         opt = opt[this.transferType()];
-        if( amt < opt.amount.min) {res.response = "less then minimum amount";res.code=-1;return res;}
-        if( opt.amount.max< amt) {res.response =  "more then maximum amount";res.code=-2;return res;}
         res.fee_real = amt*opt.percent;
+
+        if( amt < opt.amount.min) {res.response = "Сумма перевода должна быть не менне "+opt.amount.min;res.code=-1;res.amount=opt.amount.min;return res;}
+        if( opt.amount.max< amt) {res.response =  "Сумма перевода должна быть не более "+opt.amount.max;res.code=-2;res.amount=opt.amount.max; return res;}
         res.fee = (res.fee_real<opt.min)?opt.min:res.fee_real;
+        res.fee = Math.ceil(res.fee*100)/100;
         return res;
     },
     feeback:function(a){
@@ -66,6 +97,7 @@ var po = {
         res.fee_real = amt-res.amt;
         res.fee = (res.fee_real<opt.min)?opt.min:res.fee_real;
         res.amount = amt-res.fee;
+        res.fee = Math.ceil(res.fee*100)/100;
         return res;
     },
     exrate:function(a){
@@ -83,15 +115,24 @@ var po = {
         return res;
     },
     setDataText:function(fee,exr){
-        console.debug(fee,exr);
+        console.debug(fee);
         var syms = this.getoptions("symbols"),currency={from:$("[name=currencyfrom]").val(),to:$("[name=currencyto]").val()};
         if(Math.ceil(exr.amount)>0){
             var amt = Math.ceil(exr.amount) - fee.fee;
             $(".transfer-amount-to").val(amt);
         }
-        if(fee.fee>0){
+        if(fee.code!=0){
+            $('.error-response').html(fee.response);
+            $(".commission").text(0);
+            $('.transfer-amount-from').closest('.input-form-field').addClass('invalid');
+            $('#continue').attr('disabled','disabled');
+        }
+        else{
             $(".commission").text(fee.fee);
             $(".commission_cur").text(currency.from);
+            $('.error-response').html('');
+            $('.transfer-amount-from').closest('.input-form-field').removeClass('invalid').removeClass('show-invalid');
+            if(LuhnCheck($('.transfer-pan-to').val())) $('#continue').removeAttr('disabled');
         }
 
 
@@ -103,6 +144,8 @@ var po = {
         // $c.html(s);
     }
 };
+
+
 $(document).ready(function(){
     $("#continue").on("click",function(e){
         var f = po.fee({amount:$(".transfer-amount-from").val()});
@@ -124,20 +167,26 @@ $(document).ready(function(){
             }
         });
     });
-    $.ajax({
-        url:"//perevedi.online/lang",
-        dataType:"json",
-        crossDomain:true,
-        success:function(d){
-            console.debug(d);
-            $("#"+d.lang).click();
-        }
-    });
+
     $(".transfer-amount-from").on("keyup change",function(e){
         $(this).delay(1000);
         var amt = {amount:$(this).val()},f = po.fee(amt), r= po.exrate(amt);
         po.setDataText(f,r);
     });
+    $('.transfer-pan-to').inputmask("9999 9999 9999 9999").on('change keyup',function(e){
+        if(!LuhnCheck($(this).val())){
+            $(this).closest('.input-form-field').addClass('invalid');
+            $('#continue').attr('disabled','disabled');
+        }else{
+            $(this).closest('.input-form-field').removeClass('invalid').removeClass('show-invalid');
+            if($('.transfer-amount-from').val().length && !$(this).val().match(/_/) && $('.input-form-field.invalid').length==0) $('#continue').removeAttr('disabled');
+        }
+    });
+    $(".transfer-amount-from,.transfer-pan-to").on("blur",function(){
+        var iff = $(this).closest('.input-form-field');
+        if(iff.hasClass('invalid'))iff.addClass('show-invalid');
+    });
+
     $("[name=currencyto], [name=currency], [name=direction]").on("change",function(){
         $(".transfer-amount-from").change();
     });
@@ -147,5 +196,30 @@ $(document).ready(function(){
         var amt = $(this).val(),r = po.feeback({amount:amt});
         console.debug(r);
     });
+
+    $(".input-form-field-value > input").focus(function(){
+        $(this).closest('.input-form-field').addClass('focused');
+        return true;
+    }).blur(function(){
+        if(!$(this).val().length){
+            $(this).closest('.input-form-field').removeClass('focused');
+        }
+    });
+    $('.transfer-amount-from').inputmask("9{1,5}");
+    $('.transfer-pan-from').inputmask("9999 9999 9999 9999");
+
+    var panto = getParam('panto');
+    if(panto!=undefined){
+        $('.transfer-pan-to').val(panto).focus();
+        // $('.transfer-amount-from').focus();
+        // $('.transfer-pan-from').focus();
+    }
+    var lang = (CUSTOMER_LANGUAGE!=undefined)?CUSTOMER_LANGUAGE:getParam('lang');
+    lang = (lang==undefined)?'rus':lang;
+    $('[name=lang]').val(lang);
+    $("#"+lang).click();
+    console.debug('current lang='+lang,$("#"+lang).length);
+    console.debug('ifame:'+document.location);
+    // $('.lang').on('click',function(e){);
 
 });

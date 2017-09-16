@@ -140,34 +140,51 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
         // line 44
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/jquery.cookie.js");
         echo "\"></script>
+
     <script src=\"";
-        // line 45
+        // line 46
+        echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/jquery.inputmask.bundle.js");
+        echo "\"></script>
+    <!-- <script src=\"";
+        // line 47
+        echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/phone-codes/phone.js");
+        echo "\"></script>
+    <script src=\"";
+        // line 48
+        echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/phone-codes/phone-be.js");
+        echo "\"></script>
+    <script src=\"";
+        // line 49
+        echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/phone-codes/phone-ru.js");
+        echo "\"></script> -->
+
+    <script src=\"";
+        // line 51
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/app.js");
         echo "\"></script>
     <script src=\"";
-        // line 46
+        // line 52
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/locale.js");
         echo "\"></script>
     <script src=\"";
-        // line 47
+        // line 53
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/functions.js");
         echo "\"></script>
 
     <script src=\"";
-        // line 49
+        // line 55
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/vsb/js/app.js");
         echo "\"></script>
 
-
     ";
-        // line 52
+        // line 57
         echo '<script src="'. Request::getBasePath()
                 .'/modules/system/assets/js/framework.js"></script>'.PHP_EOL;
         echo '<script src="'. Request::getBasePath()
                     .'/modules/system/assets/js/framework.extras.js"></script>'.PHP_EOL;
         echo '<link rel="stylesheet" property="stylesheet" href="'. Request::getBasePath()
                     .'/modules/system/assets/css/framework.extras.css">'.PHP_EOL;
-        // line 53
+        // line 58
         echo "  </body>
 </html>";
     }
@@ -184,7 +201,7 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
 
     public function getDebugInfo()
     {
-        return array (  171 => 53,  164 => 52,  158 => 49,  153 => 47,  149 => 46,  145 => 45,  141 => 44,  137 => 43,  133 => 42,  129 => 41,  126 => 40,  122 => 39,  119 => 38,  115 => 37,  112 => 36,  107 => 35,  102 => 34,  97 => 33,  93 => 32,  90 => 31,  88 => 30,  85 => 29,  81 => 28,  74 => 24,  66 => 19,  62 => 18,  58 => 17,  54 => 16,  50 => 15,  46 => 14,  40 => 11,  36 => 10,  32 => 9,  28 => 8,  19 => 1,);
+        return array (  188 => 58,  181 => 57,  176 => 55,  171 => 53,  167 => 52,  163 => 51,  158 => 49,  154 => 48,  150 => 47,  146 => 46,  141 => 44,  137 => 43,  133 => 42,  129 => 41,  126 => 40,  122 => 39,  119 => 38,  115 => 37,  112 => 36,  107 => 35,  102 => 34,  97 => 33,  93 => 32,  90 => 31,  88 => 30,  85 => 29,  81 => 28,  74 => 24,  66 => 19,  62 => 18,  58 => 17,  54 => 16,  50 => 15,  46 => 14,  40 => 11,  36 => 10,  32 => 9,  28 => 8,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -241,12 +258,17 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
     <script src=\"{{ 'assets/js/vendor/what-input.js'|theme }}\"></script>
     <script src=\"{{ 'assets/js/vendor/foundation.js'|theme }}\"></script>
     <script src=\"{{ 'assets/js/vendor/jquery.cookie.js'|theme }}\"></script>
+
+    <script src=\"{{ 'assets/js/vendor/jquery.inputmask.bundle.js'|theme }}\"></script>
+    <!-- <script src=\"{{ 'assets/js/vendor/phone-codes/phone.js'|theme }}\"></script>
+    <script src=\"{{ 'assets/js/vendor/phone-codes/phone-be.js'|theme }}\"></script>
+    <script src=\"{{ 'assets/js/vendor/phone-codes/phone-ru.js'|theme }}\"></script> -->
+
     <script src=\"{{ 'assets/js/app.js'|theme }}\"></script>
     <script src=\"{{ 'assets/js/locale.js'|theme }}\"></script>
     <script src=\"{{ 'assets/js/functions.js'|theme }}\"></script>
 
     <script src=\"{{ 'assets/vsb/js/app.js'|theme }}\"></script>
-
 
     {% framework extras %}
   </body>

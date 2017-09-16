@@ -167,10 +167,11 @@ class __TwigTemplate_ee103c697fcc2aaf2ebbde853245c4b1bf225db3dbcb70df5f9fe64f4e4
         <form
             data-request=\"onRequest\"
             data-request-update=\"iframeoverlay: '#iframeoverlay'\"
-            data-request-success=\"console.log(data)\">
+            data-request-success=\"console.log(data)\"
+            data-request-validate>
             <div class=\"row\">
                 <div class=\"large-5 columns large-offset-1\">
-                    <div class=\"row\">
+                    <!-- <div class=\"row\">
                         <div class=\"large-9 columns\">
                             <div class=\"cur-select_wrap\">
                                 <label>
@@ -181,17 +182,27 @@ class __TwigTemplate_ee103c697fcc2aaf2ebbde853245c4b1bf225db3dbcb70df5f9fe64f4e4
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+                    <input type=\"hidden\" name=\"lang\" class=\"cur-select\" value=\"rus\" />
+                    <input type=\"hidden\" name=\"direction\" class=\"cur-select\" value=\"indoor\" />
+                    <input type=\"hidden\" name=\"currencyto\" class=\"cur-select\" value=\"RUB\" />
                     <div class=\"row\">
                         <div class=\"large-9 columns\">
-                            <input type=\"number\" name=\"amount\" required class=\"card-wrap_card_input__summ transfer-amount-from\" placeholder=\"СУММА ПЕРЕВОДА\">
+                            <div class=\"input-form-field\">
+                                <div class=\"input-form-field-label translate-it\" key=\"transfer_amount\">Сумма перевода</div>
+                                <div class=\"input-form-field-value\">
+                                    <input type=\"text\" name=\"amount\" required class=\"card-wrap_card_input__summ transfer-amount-from\">
+                                </div>
+                                <div class=\"input-form-field-error\" data-validate-error></div>
+                            </div>
+
                             <!-- Validation message for the field -->
                             <!-- <div data-validate-for=\"amount\"></div> -->
                         </div>
                         <div class=\"large-3 columns\">
                             <div class=\"cur-select_wrap\">
                                 <label>
-                                    <select class=\"cur-select\" name=\"currencyfrom\">
+                                    <select class=\"cur-select\" name=\"currencyfrom\" style=\"pointer-events:none;margin-top:12px;\">
                                         <option value=\"RUB\">RUB</option>
                                         <!-- <option value=\"GRN\">UAH</option>
                                         <option value=\"USD\">USD</option> -->
@@ -202,10 +213,17 @@ class __TwigTemplate_ee103c697fcc2aaf2ebbde853245c4b1bf225db3dbcb70df5f9fe64f4e4
                     </div><!-- INPUT SUMM -->
                     <div class=\"row\">
                         <div class=\"large-9 columns\">
-                            <input type=\"number\" class=\"card-wrap_card_input__summ transfer-amount-to\" placeholder=\"СУММА К ПОЛУЧЕНИЮ\">
+                            <div class=\"input-form-field\">
+                                <div class=\"input-form-field-label translate-it\" key=\"transfer_pan_to\">Карта получателя</div>
+                                <div class=\"input-form-field-value\">
+                                    <input type=\"text\" name=\"panto\" required class=\"card-wrap_card_input__summ transfer-pan-to\" data-track-input data-request=\"onCheckbin\">
+                                </div>
+                                <div class=\"input-form-field-error\" data-validate-error></div>
+                            </div>
+                            <!-- <input type=\"number\" class=\"card-wrap_card_input__summ transfer-amount-to\" placeholder=\"СУММА К ПОЛУЧЕНИЮ\"> -->
                         </div>
                         <div class=\"large-3 columns\">
-
+<!--
                             <div class=\"cur-select_wrap\">
                                 <label>
                                     <select class=\"cur-select\" name=\"currencyto\">
@@ -214,12 +232,12 @@ class __TwigTemplate_ee103c697fcc2aaf2ebbde853245c4b1bf225db3dbcb70df5f9fe64f4e4
                                         <option value=\"USD\">USD</option>
                                     </select>
                                 </label>
-                            </div>
+                            </div> -->
                         </div>
                     </div><!-- OUTGOIN SUMM -->
                     <div class=\"row\">
                         <div class=\"large-9 columns\">
-                            <button class=\"button expanded start-transfer translate-it\" key=\"start_translating\">НАЧАТЬ ПЕРЕВОД</button>
+                            <button class=\"button expanded start-transfer translate-it\" id=\"continue\" disabled='disabled' key=\"start_translating\">НАЧАТЬ ПЕРЕВОД</button>
                         </div>
                     </div>
                 </div>
@@ -232,6 +250,7 @@ class __TwigTemplate_ee103c697fcc2aaf2ebbde853245c4b1bf225db3dbcb70df5f9fe64f4e4
                     </div><!-- END VENDOR-BOX -->
                     <div class=\"commission-comment__wrap\">
                         <p><span class=\"translate-it\" key=\"commission\">Комиссия</span> <span class=\"commission\">50</span> <span class=\"commission_cur\">RUB</span></p>
+                        <p><span class=\"error-response\"></span></p>
                         <p><span class=\"translate-it\" key=\"crediting_instantly\">Зачисление мгновенно</span><sup>*</sup></p>
                     </div><!-- END COMMISSION-COMMENT__WRAP -->
                 </div>
@@ -423,10 +442,11 @@ class __TwigTemplate_ee103c697fcc2aaf2ebbde853245c4b1bf225db3dbcb70df5f9fe64f4e4
         <form
             data-request=\"onRequest\"
             data-request-update=\"iframeoverlay: '#iframeoverlay'\"
-            data-request-success=\"console.log(data)\">
+            data-request-success=\"console.log(data)\"
+            data-request-validate>
             <div class=\"row\">
                 <div class=\"large-5 columns large-offset-1\">
-                    <div class=\"row\">
+                    <!-- <div class=\"row\">
                         <div class=\"large-9 columns\">
                             <div class=\"cur-select_wrap\">
                                 <label>
@@ -437,17 +457,27 @@ class __TwigTemplate_ee103c697fcc2aaf2ebbde853245c4b1bf225db3dbcb70df5f9fe64f4e4
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+                    <input type=\"hidden\" name=\"lang\" class=\"cur-select\" value=\"rus\" />
+                    <input type=\"hidden\" name=\"direction\" class=\"cur-select\" value=\"indoor\" />
+                    <input type=\"hidden\" name=\"currencyto\" class=\"cur-select\" value=\"RUB\" />
                     <div class=\"row\">
                         <div class=\"large-9 columns\">
-                            <input type=\"number\" name=\"amount\" required class=\"card-wrap_card_input__summ transfer-amount-from\" placeholder=\"СУММА ПЕРЕВОДА\">
+                            <div class=\"input-form-field\">
+                                <div class=\"input-form-field-label translate-it\" key=\"transfer_amount\">Сумма перевода</div>
+                                <div class=\"input-form-field-value\">
+                                    <input type=\"text\" name=\"amount\" required class=\"card-wrap_card_input__summ transfer-amount-from\">
+                                </div>
+                                <div class=\"input-form-field-error\" data-validate-error></div>
+                            </div>
+
                             <!-- Validation message for the field -->
                             <!-- <div data-validate-for=\"amount\"></div> -->
                         </div>
                         <div class=\"large-3 columns\">
                             <div class=\"cur-select_wrap\">
                                 <label>
-                                    <select class=\"cur-select\" name=\"currencyfrom\">
+                                    <select class=\"cur-select\" name=\"currencyfrom\" style=\"pointer-events:none;margin-top:12px;\">
                                         <option value=\"RUB\">RUB</option>
                                         <!-- <option value=\"GRN\">UAH</option>
                                         <option value=\"USD\">USD</option> -->
@@ -458,10 +488,17 @@ class __TwigTemplate_ee103c697fcc2aaf2ebbde853245c4b1bf225db3dbcb70df5f9fe64f4e4
                     </div><!-- INPUT SUMM -->
                     <div class=\"row\">
                         <div class=\"large-9 columns\">
-                            <input type=\"number\" class=\"card-wrap_card_input__summ transfer-amount-to\" placeholder=\"СУММА К ПОЛУЧЕНИЮ\">
+                            <div class=\"input-form-field\">
+                                <div class=\"input-form-field-label translate-it\" key=\"transfer_pan_to\">Карта получателя</div>
+                                <div class=\"input-form-field-value\">
+                                    <input type=\"text\" name=\"panto\" required class=\"card-wrap_card_input__summ transfer-pan-to\" data-track-input data-request=\"onCheckbin\">
+                                </div>
+                                <div class=\"input-form-field-error\" data-validate-error></div>
+                            </div>
+                            <!-- <input type=\"number\" class=\"card-wrap_card_input__summ transfer-amount-to\" placeholder=\"СУММА К ПОЛУЧЕНИЮ\"> -->
                         </div>
                         <div class=\"large-3 columns\">
-
+<!--
                             <div class=\"cur-select_wrap\">
                                 <label>
                                     <select class=\"cur-select\" name=\"currencyto\">
@@ -470,12 +507,12 @@ class __TwigTemplate_ee103c697fcc2aaf2ebbde853245c4b1bf225db3dbcb70df5f9fe64f4e4
                                         <option value=\"USD\">USD</option>
                                     </select>
                                 </label>
-                            </div>
+                            </div> -->
                         </div>
                     </div><!-- OUTGOIN SUMM -->
                     <div class=\"row\">
                         <div class=\"large-9 columns\">
-                            <button class=\"button expanded start-transfer translate-it\" key=\"start_translating\">НАЧАТЬ ПЕРЕВОД</button>
+                            <button class=\"button expanded start-transfer translate-it\" id=\"continue\" disabled='disabled' key=\"start_translating\">НАЧАТЬ ПЕРЕВОД</button>
                         </div>
                     </div>
                 </div>
@@ -488,6 +525,7 @@ class __TwigTemplate_ee103c697fcc2aaf2ebbde853245c4b1bf225db3dbcb70df5f9fe64f4e4
                     </div><!-- END VENDOR-BOX -->
                     <div class=\"commission-comment__wrap\">
                         <p><span class=\"translate-it\" key=\"commission\">Комиссия</span> <span class=\"commission\">50</span> <span class=\"commission_cur\">RUB</span></p>
+                        <p><span class=\"error-response\"></span></p>
                         <p><span class=\"translate-it\" key=\"crediting_instantly\">Зачисление мгновенно</span><sup>*</sup></p>
                     </div><!-- END COMMISSION-COMMENT__WRAP -->
                 </div>

@@ -128,7 +128,8 @@ var arrLang = {
     'date' : 'date',
     'your_email' : 'e-mail',
     'message' : 'message',
-    'capcha' : 'capcha'
+    'capcha' : 'capcha',
+    'transfer_pan_to' : 'Reciever\'s card'
   },
   'rus' : {
     'tarif' : 'тарифы',
@@ -259,7 +260,8 @@ var arrLang = {
     'date' : 'дата',
     'your_email' : 'ваш e-mail',
     'message' : 'сообщение',
-    'capcha' : 'код рисунка'
+    'capcha' : 'код рисунка',
+    'transfer_pan_to' : 'Карта получателя'
   },
   'ukr' : {
     'tarif' : 'тарифi',
@@ -390,6 +392,9 @@ var arrLang = {
     'date' : 'дата',
     'your_email' : 'ваш e-mail',
     'message' : 'повідомлення',
-    'capcha' : 'код малюнка'
+    'capcha' : 'код малюнка',
+    'transfer_pan_to' : 'Карта получателя'
+
+
   }
 }

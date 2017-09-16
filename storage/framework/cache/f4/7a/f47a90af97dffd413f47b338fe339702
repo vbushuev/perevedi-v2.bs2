@@ -1,4 +1,4 @@
-1505466417a:1:{s:11:"default.htm";a:6:{s:8:"fileName";s:11:"default.htm";s:7:"content";s:2401:"description = "Default layout"
+1505531574a:1:{s:11:"default.htm";a:6:{s:8:"fileName";s:11:"default.htm";s:7:"content";s:2743:"description = "Default layout"
 ==
 <!doctype html>
 <html class="no-js" lang="ru" dir="ltr">
@@ -44,17 +44,22 @@
     <script src="{{ 'assets/js/vendor/what-input.js'|theme }}"></script>
     <script src="{{ 'assets/js/vendor/foundation.js'|theme }}"></script>
     <script src="{{ 'assets/js/vendor/jquery.cookie.js'|theme }}"></script>
+
+    <script src="{{ 'assets/js/vendor/jquery.inputmask.bundle.js'|theme }}"></script>
+    <!-- <script src="{{ 'assets/js/vendor/phone-codes/phone.js'|theme }}"></script>
+    <script src="{{ 'assets/js/vendor/phone-codes/phone-be.js'|theme }}"></script>
+    <script src="{{ 'assets/js/vendor/phone-codes/phone-ru.js'|theme }}"></script> -->
+
     <script src="{{ 'assets/js/app.js'|theme }}"></script>
     <script src="{{ 'assets/js/locale.js'|theme }}"></script>
     <script src="{{ 'assets/js/functions.js'|theme }}"></script>
 
     <script src="{{ 'assets/vsb/js/app.js'|theme }}"></script>
 
-
     {% framework extras %}
   </body>
 </html>
-";s:5:"mtime";i:1505220187;s:6:"markup";s:2366:"<!doctype html>
+";s:5:"mtime";i:1505475759;s:6:"markup";s:2708:"<!doctype html>
 <html class="no-js" lang="ru" dir="ltr">
 <head>
     <meta charset="utf-8">
@@ -98,12 +103,17 @@
     <script src="{{ 'assets/js/vendor/what-input.js'|theme }}"></script>
     <script src="{{ 'assets/js/vendor/foundation.js'|theme }}"></script>
     <script src="{{ 'assets/js/vendor/jquery.cookie.js'|theme }}"></script>
+
+    <script src="{{ 'assets/js/vendor/jquery.inputmask.bundle.js'|theme }}"></script>
+    <!-- <script src="{{ 'assets/js/vendor/phone-codes/phone.js'|theme }}"></script>
+    <script src="{{ 'assets/js/vendor/phone-codes/phone-be.js'|theme }}"></script>
+    <script src="{{ 'assets/js/vendor/phone-codes/phone-ru.js'|theme }}"></script> -->
+
     <script src="{{ 'assets/js/app.js'|theme }}"></script>
     <script src="{{ 'assets/js/locale.js'|theme }}"></script>
     <script src="{{ 'assets/js/functions.js'|theme }}"></script>
 
     <script src="{{ 'assets/vsb/js/app.js'|theme }}"></script>
-
 
     {% framework extras %}
   </body>
