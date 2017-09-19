@@ -1,0 +1,48 @@
+description = "For responses layout"
+==
+<!doctype html>
+<html class="no-js" lang="ru" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perevedi.online – Переводы с карты на карту</title>
+    <link rel="stylesheet" href="{{ 'assets/css/foundation.css'|theme }}">
+    <link rel="stylesheet" href="{{ 'assets/css/app.css'|theme }}">
+    <link rel="stylesheet" href="{{ 'assets/css/custom.css'|theme }}">
+    <link rel="stylesheet" href="{{ 'assets/vsb/css/style.css'|theme }}">
+
+    <!-- favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ 'assets/img/favicons/apple-touch-icon.png'|theme }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ 'assets/img/favicons/favicon-32x32.png'|theme }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ 'assets/img/favicons/favicon-16x16.png'|theme }}">
+    <link rel="manifest" href="{{ 'assets/img/favicons/manifest.json'|theme }}">
+    <link rel="mask-icon" href="{{ 'assets/img/favicons/safari-pinned-tab.svg'|theme }}" color="#5bbad5">
+    <link rel="shortcut icon" href="{{ 'assets/favicon.ico'|theme }}"/>
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+    <div class="loader">
+        <img src="{{ 'assets/img/loader.gif'|theme }}" alt="">
+    </div>
+        {% page %}
+    </section>
+    <script src="{{ 'assets/js/vendor/jquery.js'|theme }}"></script>
+    <script src="{{ 'assets/js/vendor/what-input.js'|theme }}"></script>
+    <script src="{{ 'assets/js/vendor/foundation.js'|theme }}"></script>
+    <script src="{{ 'assets/js/vendor/jquery.cookie.js'|theme }}"></script>
+
+    <script src="{{ 'assets/js/vendor/jquery.inputmask.bundle.js'|theme }}"></script>
+    <!-- <script src="{{ 'assets/js/vendor/phone-codes/phone.js'|theme }}"></script>
+    <script src="{{ 'assets/js/vendor/phone-codes/phone-be.js'|theme }}"></script>
+    <script src="{{ 'assets/js/vendor/phone-codes/phone-ru.js'|theme }}"></script> -->
+
+    <script src="{{ 'assets/js/app.js'|theme }}"></script>
+    <script src="{{ 'assets/js/locale.js'|theme }}"></script>
+    <script src="{{ 'assets/js/functions.js'|theme }}"></script>
+
+    <script src="{{ 'assets/vsb/js/app.js'|theme }}"></script>
+
+    {% framework extras %}
+  </body>
+</html>

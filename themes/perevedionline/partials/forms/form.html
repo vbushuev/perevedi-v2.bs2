@@ -18,7 +18,8 @@
     <link rel="shortcut icon" href="favicon.ico"/>
     <meta name="theme-color" content="#ffffff">
   </head>
-  <body>
+  <body style="position:relative">
+        <div style="position:fixed; top:8px;right:16px;color:rgba(255,255,255,.32);font-size:10px;">v.1.3.7</div>
       <ul class="lang-menu" style="display:none;">
             <li><a href="#" class="lang" title="Русский" id="rus">РУС</a></li>
             <li><a href="#" class="lang" title="Українська" id="ukr">УКР</a></li>
@@ -41,49 +42,57 @@
       <div class="main-desc_scnd text-right translate-it" key="easily">легко!</div>
     </div>
   </div>
-  <div class="row"><form data-abide action="${ACTION}" method="post">
-    <div class="large-5 column">
-        <div class="card-wrap">
-          <div class="card-wrap_card">
-            <div class="card-wrap_card_h-wr">
-                <div class="row">
-                  <div class="large-6 column">
-                    <span class="card-wrap_card__header translate-it" key="sender">Отправитель</span>
-                  </div>
-                  <div class="large-6 column">
-                    <i class="icn-visa"></i>
-                    <i class="icn-master"></i>
-                  </div>
-                </div>
-            </div><!-- END CARD-WRAP_CARD_H-WR -->
-            <!-- <form data-abide action="#"> -->
-
-              <div class="card-wrap_card_input">
-                <input type="text" class="card-wrap_card_input__text transfer-pan-from" placeholder="НОМЕР КАРТЫ" pattern="card"  name="${CARDNO}">
-              </div>
-              <div class="card-wrap_card_data-input">
-                <div class="card-wrap_card_data-input__m-wrap clearfix">
-                  <div class="card-wrap_card_data-input__m-wrap_item">
-                      <input type="number" min="1" max="12" class="card-wrap_card_data-input__m-wrap_month" placeholder="ММ" name="${EXPMONTH}">
-                  </div>
-                  <div class="card-wrap_card_data-input__m-wrap_item">
-                      <input type="number" min="1" max="99" class="card-wrap_card_data-input__m-wrap_year" placeholder="YY" name="${EXPYEAR}">
-                  </div>
-                  <div class="card-wrap_card_data-input__m-wrap_item__cvv">
-                    <input type="number" min="1" max="999" class="card-wrap_card_data-input__m-wrap_cvv" placeholder="CVV/CVC2" pattern="cvv" name="${EXPYEAR}">
-                  </div>
-                  <div class="about_cvv__wrap">
-                    <a href="#!" class="about_cvv">?</a>
-                    <div class="about_cvv_tooltip">
-                      <p><span class="translate-it" key="tooltip1">Введите 3 последние цифры</span><br /><span class="translate-it" key="tooltip2">на обратной стороне карты</span></p>
-                      <div class="about_cvv_tooltip__card"></div>
+    <div class="row">
+        <form data-abide action="${ACTION}" onSubmit="isCCValid()" method="post">
+            <div class="large-5 column">
+                <div class="card-wrap">
+                    <div class="card-wrap_card">
+                        <div class="card-wrap_card_h-wr">
+                            <div class="row">
+                                <div class="large-6 column">
+                                    <span class="card-wrap_card__header translate-it" key="sender">Отправитель</span>
+                                </div>
+                                <div class="large-6 column">
+                                    <i class="icn-visa"></i>
+                                    <i class="icn-master"></i>
+                                </div>
+                            </div>
+                        </div><!-- END CARD-WRAP_CARD_H-WR -->
+                        <!-- <form data-abide action="#"> -->
+                        <div class="card-wrap_card_input">
+                            <div class="input-form-field">
+                                <div class="input-form-field-label translate-it" key="cardnumber">Номер карты</div>
+                                <div class="input-form-field-value">
+                                    <input type="text" class="card-wrap_card_input__text transfer-pan-from-" onkeyup="$('#cardnumber').val($(this).val().replace(/\D/g,''))">
+                                    <input id="cardnumber" type="hidden" pattern="card"  name="${CARDNO}">
+                                    <input type="hidden" value="Perevedi Online" name="${CARDHOLDER}"/>
+                                </div>
+                                <div class="input-form-field-error" data-validate-error></div>
+                            </div>
+                        </div>
+                        <div class="card-wrap_card_data-input">
+                            <div class="card-wrap_card_data-input__m-wrap clearfix">
+                                <div class="card-wrap_card_data-input__m-wrap_item">
+                                    <input type="number" min="1" max="12" class="card-wrap_card_data-input__m-wrap_month" placeholder="ММ" name="${EXPMONTH}">
+                                </div>
+                                <div class="card-wrap_card_data-input__m-wrap_item">
+                                    <input type="number" min="1" max="99" class="card-wrap_card_data-input__m-wrap_year" placeholder="YY" name="${EXPYEAR}">
+                                </div>
+                                <div class="card-wrap_card_data-input__m-wrap_item__cvv">
+                                    <input type="number" min="1" max="999" class="card-wrap_card_data-input__m-wrap_cvv" placeholder="CVV/CVC2" pattern="cvv" name="${CVV2}">
+                                </div>
+                                <div class="about_cvv__wrap">
+                                    <a href="#!" class="about_cvv">?</a>
+                                    <div class="about_cvv_tooltip">
+                                        <p><span class="translate-it" key="tooltip1">Введите 3 последние цифры</span><br /><span class="translate-it" key="tooltip2">на обратной стороне карты</span></p>
+                                        <div class="about_cvv_tooltip__card"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
+                </div><!-- END CARD-WRAP -->
             </div>
-        </div><!-- END CARD-WRAP -->
-      </div>
       <div class="large-2 column">
           <div class="row large-collapse">
               <div class="large-12 columns large-expand text-center">
@@ -99,7 +108,7 @@
               <div class="large-4 columns">
                 <div class="cur-select_wrap">
                   <label style="color: white;font-size: 24px;">
-                      ${CURRENCY}
+                      <!-- ${CURRENCY} -->
                       <!-- <select class="cur-select" name="currency">
                           <option value="RUB">РУБ</option>
                           <option value="GRN">ГРН</option>
@@ -109,8 +118,12 @@
                 </div>
               </div>
               <div class="large-12 columns">
-                <button class="button expanded send-transfer translate-it" type="submit" onclick="return isCCValid(document.getElementById('cardnumber').value);" key="send">Перевести</button>
+                <button class="button expanded send-transfer translate-it" type="submit" key="send">Перевести</button>
                 <!-- <input name="submit" onclick="return isCCValid(document.getElementById('cardnumber').value);" type="submit" value="Pay"/> -->
+                    $!{INTERNAL_SECTION}
+                    #if($!card_error)
+                        <div class="pne-card-error" style="color: red;">$!card_error</div>
+                    #end
               </div>
           </div>
       </div>
@@ -129,7 +142,18 @@
                 </div>
             </div><!-- END CARD-WRAP_CARD_H-WR -->
             <div class="card-wrap_card_input">
-                <input type="text" class="card-wrap_card_input__text transfer-pan-to" placeholder="НОМЕР КАРТЫ" pattern="card" name="${DESTINATIONCARDNO}" >
+                <div class="input-form-field">
+                    <div class="input-form-field-label translate-it" key="cardnumber">Номер карты</div>
+                    <div class="input-form-field-value">
+                        <!-- <input type="text" class="card-wrap_card_input__text transfer-pan-to" placeholder="НОМЕР КАРТЫ" pattern="card" name="${DESTINATIONCARDNO}" > -->
+                        <!-- <input id="cardnumberto" type="text" class="card-wrap_card_input__text transfer-pan-to-" pattern="card"  name="${DESTINATIONCARDNO}"> -->
+
+                        <input type="text" class="card-wrap_card_input__text transfer-pan-from-" onkeyup="$('#cardnumberto').val($(this).val().replace(/\D/g,''))">
+                        <input id="cardnumberto" type="hidden" pattern="card"  name="${DESTINATIONCARDNO}">
+                    </div>
+                    <div class="input-form-field-error" data-validate-error></div>
+                </div>
+
               </div>
               <div class="card-wrap_card_data__recepient">
                 <div class="row large-collapse">
@@ -158,14 +182,11 @@
 </form></div>
 </div><!-- END MAIN-BLOCK -->
 <script>
-    var CUSTOMER_LANGUAGE = ${CUSTOMER_LANGUAGE};
-    var ORDERDESCRIPTION = ${ORDERDESCRIPTION};
+    var CUSTOMER_LANGUAGE = '${CUSTOMER_LANGUAGE}';
+    var ORDERDESCRIPTION = '${ORDERDESCRIPTION}';
 </script>
 <script src="//perevedi.online/js/vendor/jquery.js"></script>
 <script src="//perevedi.online/themes/perevedionline/assets/js/vendor/jquery.inputmask.bundle.js"></script>
-<!-- <script src="//perevedi.online/themes/perevedionline/assets/js/vendor/phone-codes/phone.js"></script>
-<script src="//perevedi.online/themes/perevedionline/assets/js/vendor/phone-codes/phone-be.js"></script>
-<script src="//perevedi.online/themes/perevedionline/assets/js/vendor/phone-codes/phone-ru.js"></script> -->
 <script src="//perevedi.online/js/vendor/what-input.js"></script>
 <script src="//perevedi.online/js/vendor/foundation.js"></script>
 <script src="//perevedi.online/js/vendor/jquery.cookie.js"></script>

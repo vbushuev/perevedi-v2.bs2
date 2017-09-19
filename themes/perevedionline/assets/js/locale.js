@@ -1,5 +1,6 @@
 var arrLang = {
   'eng' : {
+      'send_email':'Send',
     'tarif' : 'Rates',
     'contacts' : 'Contacts',
     'about_service' : 'About',
@@ -40,6 +41,7 @@ var arrLang = {
     'operation_time' : 'Operation time',
     'operation_id' : 'Operation ID',
     'transfer_amount' : 'Amount',
+    'transfer_amount_debit' : 'Debit amount',
     'fee' : 'Fee',
     'keep_your_check' : 'We recommend that you keep your check',
     'print' : 'Print',
@@ -132,6 +134,7 @@ var arrLang = {
     'transfer_pan_to' : 'Reciever\'s card'
   },
   'rus' : {
+      'send_email':'Отправить',
     'tarif' : 'тарифы',
     'contacts' : 'Контакты',
     'about_service' : 'О сервисе',
@@ -264,6 +267,7 @@ var arrLang = {
     'transfer_pan_to' : 'Карта получателя'
   },
   'ukr' : {
+      'send_email':'Відправити',
     'tarif' : 'тарифi',
     'contacts' : 'Контакти',
     'about_service' : 'Про сервіс',
@@ -304,6 +308,7 @@ var arrLang = {
     'operation_time' : 'Час операції',
     'operation_id' : 'ID операції',
     'transfer_amount' : 'Сума переказу',
+    'transfer_amount_debit' : 'Сума переказу',
     'fee' : 'Комісія',
     'keep_your_check' : 'Рекомендуємо зберегти ваш чек',
     'print' : 'Роздрукувати',

@@ -1,4 +1,4 @@
-<?php namespace vsb\bintab\Components;
+<?php namespace vsb\bins\Components;
 
 use Cms\Classes\ComponentBase;
 use ApplicationException;

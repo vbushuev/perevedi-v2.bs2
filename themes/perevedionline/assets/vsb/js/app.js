@@ -1,7 +1,11 @@
 "use strict";
+function isCCValid(){
+    $('[placeholder=YY]').val('20'+$('[placeholder=YY]').val());
+    return true;
+}
 var getParam = (function(){
     return function(n){
-        var searchstr = (ORDERDESCRIPTION!=undefined)?ORDERDESCRIPTION:location.search;
+        var searchstr = (typeof(ORDERDESCRIPTION)!="undefined")?ORDERDESCRIPTION:location.search;
         var p = searchstr.split(n+'=')[1];
         if(p!=undefined){
             p = p.split('&')[0];
@@ -79,7 +83,7 @@ var po = {
         opt = opt[this.transferType()];
         res.fee_real = amt*opt.percent;
 
-        if( amt < opt.amount.min) {res.response = "Сумма перевода должна быть не менне "+opt.amount.min;res.code=-1;res.amount=opt.amount.min;return res;}
+        if( amt < opt.amount.min) {res.response = "Сумма перевода должна быть не менее "+opt.amount.min;res.code=-1;res.amount=opt.amount.min;return res;}
         if( opt.amount.max< amt) {res.response =  "Сумма перевода должна быть не более "+opt.amount.max;res.code=-2;res.amount=opt.amount.max; return res;}
         res.fee = (res.fee_real<opt.min)?opt.min:res.fee_real;
         res.fee = Math.ceil(res.fee*100)/100;
@@ -128,6 +132,7 @@ var po = {
             $('#continue').attr('disabled','disabled');
         }
         else{
+            $("[name=fee]").val(fee.fee);
             $(".commission").text(fee.fee);
             $(".commission_cur").text(currency.from);
             $('.error-response').html('');
@@ -147,6 +152,15 @@ var po = {
 
 
 $(document).ready(function(){
+    $.ajax({
+        url:"/fee",
+        success:function(d){
+            try{eval(d);}
+            catch(e){
+                console.error('Error loading Fee settings',e);
+            }
+        }
+    });
     $("#continue").on("click",function(e){
         var f = po.fee({amount:$(".transfer-amount-from").val()});
         $.ajax({
@@ -190,7 +204,7 @@ $(document).ready(function(){
     $("[name=currencyto], [name=currency], [name=direction]").on("change",function(){
         $(".transfer-amount-from").change();
     });
-    $(".transfer-amount-from").change();
+    // $(".transfer-amount-from").change();
     $(".transfer-amount-to").on("keyup change",function(e){
         $(this).delay(1000);
         var amt = $(this).val(),r = po.feeback({amount:amt});
@@ -206,20 +220,27 @@ $(document).ready(function(){
         }
     });
     $('.transfer-amount-from').inputmask("9{1,5}");
-    $('.transfer-pan-from').inputmask("9999 9999 9999 9999");
+    $('.transfer-pan-from').inputmask("9999 9999 9999 9999",{removeMaskOnSubmit:true});
+
+    $('.transfer-pan-from-,.transfer-pan-to-').inputmask("9999 9999 9999 9999",{removeMaskOnSubmit:true});
 
     var panto = getParam('panto');
     if(panto!=undefined){
-        $('.transfer-pan-to').val(panto).focus();
+        $('#cardnumberto').val(panto).prev('input').focus().val(panto).delay(200);
+        // $('.transfer-pan-to-').val(panto).focus();
         // $('.transfer-amount-from').focus();
         // $('.transfer-pan-from').focus();
+        $('.transfer-pan-from-:first').focus();
     }
-    var lang = (CUSTOMER_LANGUAGE!=undefined)?CUSTOMER_LANGUAGE:getParam('lang');
+    var lang = (typeof(CUSTOMER_LANGUAGE)!="undefined")?CUSTOMER_LANGUAGE:getParam('lang');
     lang = (lang==undefined)?'rus':lang;
     $('[name=lang]').val(lang);
-    $("#"+lang).click();
+
     console.debug('current lang='+lang,$("#"+lang).length);
     console.debug('ifame:'+document.location);
-    // $('.lang').on('click',function(e){);
-
+    // try{$("#"+lang).click();}catch(e){console.warn(e);}
+    $(".body > div > div:nth-child(4) > form > div.large-2.column > div > div.large-4.columns > div > label").hide();
+    $("form").each(function(){
+        if($(this).attr('data-abide')!=undefined)$(this).attr('onsubmit',"isCCValid()");
+    });
 });

@@ -113,7 +113,15 @@ if (lang === 'ukr') {
 
 //перевод на лету
 	$('.translate-it').each(function(){
-		$(this).text(arrLang[lang][$(this).attr('key')]);
+		if(lang!=undefined && arrLang != undefined  && arrLang[lang]!=undefined){
+			try{
+				$(this).text(arrLang[lang][$(this).attr('key')]);
+			}
+			catch(e){
+				console.error($(this).text()+' translate error',e);
+			}
+		}
+
 	});
 //end перевод на лету
 

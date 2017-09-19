@@ -2,7 +2,7 @@
 use db\Model;
 class Transaction extends Model{
     protected $timestampType = "timestamp";
-    protected $fillable = ['amount','currency','status','email','client_ip','order_id'];
+    protected $fillable = ['amount','currency','status','email','client_ip','order_id','fee'];
     public function __construct(){
         parent::__construct('requests','id','created_at','updated_at');
     }

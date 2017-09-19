@@ -1,0 +1,67 @@
+<!doctype html>
+<html class="no-js" lang="ru" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perevedi.online – Переводы с карты на карту</title>
+    <link rel="stylesheet" href="//perevedi.online/css/foundation.css">
+    <link rel="stylesheet" href="//perevedi.online/css/app.css">
+    <link rel="stylesheet" href="//perevedi.online/css/custom.css">
+    <link rel="stylesheet" href="//perevedi.online/themes/perevedionline/assets/vsb/css/style.css">
+    <!-- favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="//perevedi.online/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="//perevedi.online/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="//perevedi.online/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="//perevedi.online/img/favicons/manifest.json">
+    <link rel="mask-icon" href="//perevedi.online/img/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <meta name="theme-color" content="#ffffff">
+    <script type="text/javascript">
+        function fc(t) {
+            document.getElementById("seconds-remaining").innerHTML = t;
+            (t > 0) ? setTimeout(function(){fc(--t);}, 1000) : document.checkform.submit();
+        }
+    </script>
+  </head>
+  <body style="position:relative"  onload="fc($!refresh_interval)">
+      <div style="position:fixed; top:8px;right:16px;color:rgba(255,255,255,.32);font-size:10px;">v.1.3.7</div>
+        <ul class="lang-menu" style="display:none;">
+            <li><a href="#" class="lang" title="Русский" id="rus">РУС</a></li>
+            <li><a href="#" class="lang" title="Українська" id="ukr">УКР</a></li>
+            <li><a href="#" class="lang" title="English" id="eng">ENG</a></li>
+            <li><a href="#!" class="envelop" data-open="support" title="Поддержка" aria-controls="support" aria-haspopup="true" tabindex="0"><i class="icn-envelop"></i></a></li>
+          </ul>
+    <div class="main-block">
+        <div class="row">
+            <div class="large-12 column" style="text-align:center;padding-top:8%;">
+                <h3><span class="translate-it" key="orderdescriptiondetails">Ваш перевод на сумму</span> $!AMOUNT <span class="translate-it" key="isprocessing">обрабатывается</span></h3>
+                <p class="translate-it" key="waitforprocess">Please wait, your payment is being processed, remaining <span id="seconds-remaining">&nbsp;</span> seconds.</p>
+                <form name="checkform" method="post">
+                    <input type="hidden" name="tmp" value="$!uuid"/>
+                    <div class="large-12 column">$!{INTERNAL_SECTION}</div>
+                    <div class="large-5 column">&nbsp;</div>
+                    <div class="large-2 column">
+                        <button class="button expanded send-transfer translate-it" type="submit" key="check">Проверить сейчас</button>
+                    </div>
+                    <div class="large-5 column">&nbsp;</div>
+
+                </form>
+            </div>
+        </div>
+    </div><!-- END MAIN-BLOCK -->
+<script>
+    var CUSTOMER_LANGUAGE = '${CUSTOMER_LANGUAGE}';
+    var ORDERDESCRIPTION = '${ORDERDESCRIPTION}';
+</script>
+<script src="//perevedi.online/js/vendor/jquery.js"></script>
+<script src="//perevedi.online/themes/perevedionline/assets/js/vendor/jquery.inputmask.bundle.js"></script>
+<script src="//perevedi.online/js/vendor/what-input.js"></script>
+<script src="//perevedi.online/js/vendor/foundation.js"></script>
+<script src="//perevedi.online/js/vendor/jquery.cookie.js"></script>
+<script src="//perevedi.online/js/app.js"></script>
+<script src="//perevedi.online/js/locale.js"></script>
+<script src="//perevedi.online/js/functions.js"></script>
+<script src="//perevedi.online/themes/perevedionline/assets/vsb/js/app.js"></script>
+</body>
+</html>

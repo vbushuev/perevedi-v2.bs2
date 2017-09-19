@@ -4,8 +4,27 @@ layout = "default"
 ==
 use core\Config;
 use db\models\Transaction;
+use db\models\Bintab;
 function onCheckbin(){
-    return 'indoor';
+    $this['direction'] = 'indoor';
+    $res = [
+        "bin" => preg_replace('/[^\d]+/m','',$_POST['panto']),
+        'direction' => 'crossboard',
+        'bank' => 'Worldwide',
+        'country' => 'Worldwide'
+    ];
+    if(strlen($res['bin'])<6) return [
+        "bin" => $res['bin'],
+        'direction' => 'indoor',
+        'bank' => 'Worldwide',
+        'country' => 'Worldwide'
+    ];
+
+    $res['bin'] = substr($res['bin'],0,6);
+    $bt = Bintab::find($res['bin']);
+    $res = ($bt===false)?$res:$bt->toArray();
+    $this['direction'] = $res['direction'];
+    return $res;
 }
 function onRequest(){
     $ariuspay = [
@@ -41,10 +60,10 @@ function onRequest(){
         "amount"=>$_POST["amount"],
         "currency"=>$_POST["currencyfrom"],
         "client_ip"=>$_SERVER["REMOTE_ADDR"],
-        "status"=>"0"
+        "status"=>"0",
+        "fee" => $_POST["fee"]
     ]);
     // $ssn = "1490";//10001100 - 10001492
-    $ssn = "10001".rand(100,492);
     $saleData = [
         "data"=>[
             "client_orderid" => $rq->id,
@@ -63,7 +82,7 @@ function onRequest(){
             "amount" => $rq->amount,
             "currency" => $rq->currency,
             "email" => "vsb@garan24.ru",
-            "ssn" => $ssn,
+            //"ssn" => $ssn,
             "ipaddress" => $rq->client_ip,
             "site_url" => $host,
             "redirect_url" => $host."/response",
@@ -71,6 +90,7 @@ function onRequest(){
             //"merchant_data" => "VIP customer"
         ]
     ];
+    if($direction=='crossboard')$saleData["data"]["ssn"] = "10001".rand(100,492);
     $saleData = array_merge($pne[$aquere][$direction][$operation],$saleData);
     // print_r($saleData);exit;
     $request = new \Garan24\Gateway\Ariuspay\PreauthRequest($saleData);
@@ -89,7 +109,7 @@ function onRequest(){
     if(!isset($retval["error-code"]))$this["success"]=true;
     $this["redirect"] = isset($retval["redirect-url"])?$retval["redirect-url"]."?panto=".$panto."&lang=".$lang:false;
     //$this["redirect"] = "https://perevedi-v2.bs2/form/?panto=".$panto."&lang=".$lang;
-
+    //$this["redirect"] = "https://perevedi-v2.bs2/wait/?panto=".$panto."&lang=".$lang;
     return $retval;
 }
 ==
@@ -258,7 +278,9 @@ function onRequest(){
                         </div>
                     </div> -->
                     <input type="hidden" name="lang" class="cur-select" value="rus" />
-                    <input type="hidden" name="direction" class="cur-select" value="indoor" />
+                    <input type="hidden" name="fee" class="cur-select" value="0" />
+
+
                     <input type="hidden" name="currencyto" class="cur-select" value="RUB" />
                     <div class="row">
                         <div class="large-9 columns">
@@ -290,7 +312,14 @@ function onRequest(){
                             <div class="input-form-field">
                                 <div class="input-form-field-label translate-it" key="transfer_pan_to">Карта получателя</div>
                                 <div class="input-form-field-value">
-                                    <input type="text" name="panto" required class="card-wrap_card_input__summ transfer-pan-to" data-track-input data-request="onCheckbin">
+                                    <input type="text" name="panto" required class="card-wrap_card_input__summ transfer-pan-to"
+                                        data-track-input
+                                        data-request="onCheckbin"
+                                        data-request-update="checkbin: '#direction_layout'"
+                                        data-request-success="console.log(data)">
+                                    <div id="direction_layout">
+                                        <input type="hidden" name="direction" value="indoor" />
+                                    </div>
                                 </div>
                                 <div class="input-form-field-error" data-validate-error></div>
                             </div>

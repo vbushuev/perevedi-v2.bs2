@@ -1,0 +1,202 @@
+title="response"
+url="/response"
+layout="response"
+==
+use db\models\Transaction;
+function onStart(){
+    //$this['success']=true;
+    $data = file_get_contents('php://input');
+    /*
+
+    error_message=Not+sufficient+funds
+    &processor-tx-id=
+    &merchant_order=128
+    &orderid=98848757
+    &client_orderid=128
+    &bin=546938
+    &control=2c25ffef72717cacdf9ab73b8e86e41e477b85da
+    &descriptor=dengisend.ru
+    &type=transfer
+    &card-type=MASTERCARD
+    &phone=%2B79265766710
+    &last-four-digits=5468
+    &card-holder-name=Perevedi+Online
+    &error_code=90052
+    &dest-last-four-digits=8039
+    &dest-bin=548673
+    &dest-card-type=MASTERCARD
+    &status=declined
+
+    */
+
+    $dataArr = [];
+    parse_str($data,$dataArr);
+    $this['response'] = '['.join($dataArr,'],[').']';
+    $r = [
+        "url" => isset($_SERVER["HTTP_ORIGIN"])?$_SERVER["HTTP_ORIGIN"]:$_SERVER["HTTP_HOST"],
+        "data" => $dataArr
+    ];
+    $redirect_url = "";
+    try{
+        $obj = new \Garan24\Gateway\Ariuspay\CallbackResponse($r,function($d){});
+        if($obj->accept()){
+            $this['success']=true;
+            $trx = Transaction::find($dataArr['merchant_order']);
+            $this['amount']=floatval($trx->amount)+floatval($trx->fee);
+            $this['panfrom'] = $dataArr['bin']."******".$dataArr['last-four-digits'];
+            $this['panto'] = $dataArr['dest-bin']."******".$dataArr['dest-last-four-digits'];
+            $this['date'] = date('d.m.Y H:i');
+            $this['order_id'] = $dataArr['orderid'];
+            $this['fee'] = $trx->fee;
+            $this['total'] = $trx->amount;
+        }
+
+    }catch(Exception $e){
+        $this['error'] = isset($dataArr['error_code'])?$dataArr['error_code']:'1005';
+        $this['message'] = isset($dataArr['error_message'])?$dataArr['error_message']:'error message';
+    }
+}
+
+==
+<div class="two-block_wrapper">
+    <div class="transaction-operation">
+        <form data-abide action="#">
+            <div class="row">
+                <div class="large-5 large-offset-1 column">
+                    <div class="card-wrap">
+                        <div class="card-wrap_card">
+                            <div class="card-wrap_card_h-wr">
+                                <div class="row">
+                                    <div class="large-6 column">
+                                        <span class="card-wrap_card__header translate-it" key="sender">Отправитель</span>
+                                    </div>
+                                    <div class="large-6 column">
+                                        <div class="small-vendor_wrap">
+                                            <i class="icn-visa-small"></i>
+                                            <i class="icn-master-small"></i>
+                                            <i class="icn-mir-small"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- END CARD-WRAP_CARD_H-WR -->
+                            <div class="card-wrap_card_input">
+                                <input type="number" class="card-wrap_card_input__text" placeholder="НОМЕР КАРТЫ" pattern="card">
+                            </div>
+                            <div class="card-wrap_card_data-input">
+                                <div class="card-wrap_card_data-input__m-wrap clearfix">
+                                    <div class="card-wrap_card_data-input__m-wrap_item">
+                                        <input type="number" min="1" max="12" class="card-wrap_card_data-input__m-wrap_month" placeholder="ММ">
+                                    </div>
+                                    <div class="card-wrap_card_data-input__m-wrap_item">
+                                        <input type="number" min="1" max="99" class="card-wrap_card_data-input__m-wrap_year" placeholder="YY">
+                                    </div>
+                                    <div class="card-wrap_card_data-input__m-wrap_item__cvv">
+                                        <input type="number" min="1" max="999" class="card-wrap_card_data-input__m-wrap_cvv" placeholder="CVV/CVC2" pattern="cvv">
+                                    </div>
+                                    <div class="about_cvv__wrap">
+                                        <a href="#!" class="about_cvv">?</a>
+                                        <div class="about_cvv_tooltip">
+                                            <p><span class="translate-it" key="tooltip1">Введите 3 последние цифры</span><br /><span class="translate-it" key="tooltip2">на обратной стороне карты</span></p>
+                                            <div class="about_cvv_tooltip__card"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- END CARD-WRAP -->
+                </div><!-- END LEFT CARD COLL -->
+                <div class="large-5 large-pull-1 column">
+                    <div class="card-wrap">
+                        <div class="card-wrap_card">
+                            <div class="card-wrap_card_h-wr">
+                                <div class="row">
+                                    <div class="large-6 column">
+                                        <span class="card-wrap_card__header translate-it" key="recipient">Получатель</span>
+                                    </div>
+                                    <div class="large-6 column">
+                                        <div class="small-vendor_wrap">
+                                            <i class="icn-visa-small"></i>
+                                            <i class="icn-master-small"></i>
+                                            <i class="icn-mir-small"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- END CARD-WRAP_CARD_H-WR -->
+                            <div class="card-wrap_card_input">
+                                <input type="number" class="card-wrap_card_input__text" placeholder="НОМЕР КАРТЫ" pattern="card">
+                            </div>
+                        </div>
+                    </div><!-- END CARD-WRAP -->
+                </div><!-- END RIGHT CARD COLL -->
+            </div>
+            <div class="row">
+                <div class="large-10 large-offset-2 columns">
+                    <div class="agreement-chbx_wrapper">
+                        <input id="agreement" type="checkbox" required="required">
+                        <label for="agreement" class="css-label"><span class="translate-it" key="i_accept_the_terms_of_use_of">Я принимаю условия использования</span> <a href="#!" class="translate-it" key="the_service">сервиса</a> <span class="translate-it" key="and">и</span> <a href="#!" class="translate-it" key="the_public_offer">публичной оферты</a> <span class="translate-it" key="of_the_acquiring_banks">банков-эквайров</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-2 large-centered columns">
+                    <button class="button expanded send-transfer translate-it" disabled="disabled" key="send">Перевести</button>
+                </div>
+            </div>
+        </form>
+    </div><!-- END TRANSACTION-OPERATION -->
+    {% if success %}
+    <div class="success-operation" style="display:block;" >
+        <div class="row">
+            <div class="large-6 columns large-centered">
+                <img src="{{ 'assets//img/logo-gs.png'|theme }}" alt="Perevedi.online" class="print-logo">
+            </div>
+        </div><!-- END PRINT LOGO ROW -->
+        <div class="row">
+            <div class="large-12 columns">
+                <h2 class="success-operation_h2 text-center translate-it" key="successful">перевод совершен успешно</h2>
+                <p class="success-operation_text__desc translate-it" key="several_minutes_to_several_days">Зачисление может происходить от нескольких минут до нескольких дней</p>
+                <p class="success-operation_text"><span class="translate-it" key="number_of_the_sender">Номер карты отправителя</span> <span>{{panfrom}}</span></p>
+                <p class="success-operation_text"><span class="translate-it" key="beneficiary_card_number">Номер карты получателя</span> <span>{{panto}}</span></p>
+                <p class="success-operation_text"><span class="translate-it" key="operation_time">Время операции</span> <span>{{date}}</span></p>
+                <p class="success-operation_text"><span class="translate-it" key="operation_id">ID операции</span> <span>{{order_id}}</span></p>
+                <p class="success-operation_text"><span class="translate-it" key="transfer_amount">Сумма перевода:</span> <span>{{amount}}</span> <span>RUB</span></p>
+                <p class="success-operation_text"><span class="translate-it" key="enrollment amount_confirm">Сумма зачисления:</span> <span>{{total}}</span> <span>RUB</span></p>
+                <p class="success-operation_text"><span class="translate-it" key="fee">Комиссия:</span> <span>{{fee}}</span> <span>RUB</span></p>
+                <p class="success-operation_text"><span class="translate-it" key="keep_your_check">Рекомендуем сохранить ваш чек</span></p>
+            </div>
+        </div>
+        <form action="#!" data-abide class="success-operation__form">
+            <div class="row">
+                <div class="large-1 large-offset-2 columns">
+                    <button class="button expanded success-operation-button">ok</button>
+                </div>
+                <div class="large-3 columns">
+                    <button class="button expanded success-operation-button print-btn translate-it" key="print">распечатать</button>
+                </div>
+                <div class="large-3 columns">
+                    <input type="email" class="email-input" pattern="email" placeholder="ВВЕДИТЕ ВАШ E-MAIL">
+                </div>
+                <div class="large-3 columns">
+                    <button class="button expanded success-operation-button translate-it" key="send_email">отправить</button>
+                </div>
+            </div>
+        </form>
+    </div><!-- END SUCCESS-OPERATION -->
+    {% else %}
+    <div class="error_block" style="display:block;">
+        <div class="row">
+            <div class="large-12 columns">
+                <h2 class="error_block__h2 text-center"><span class="translate-it" key="error">ОШИБКА</span> <span>{{error}}</span></h2>
+                <p class="text-center">{{message}}</p>
+            </div>
+            <div class="large-2 columns large-centered">
+                <!-- <button class="button expanded error-button translate-it" key="cancel" onclick="document.location.href='/';">вернуться</button> -->
+            </div>
+
+        </div>
+    </div><!-- END ERROR_BLOCK -->
+    {% endif %}
+    <code>
+        {{response}}
+    </code>
+</div><!-- END TWO-BLOCK_WRAPPER -->
