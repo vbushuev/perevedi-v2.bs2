@@ -241,6 +241,8 @@ $(document).ready(function(){
     // try{$("#"+lang).click();}catch(e){console.warn(e);}
     $(".body > div > div:nth-child(4) > form > div.large-2.column > div > div.large-4.columns > div > label").hide();
     $("form").each(function(){
-        if($(this).attr('data-abide')!=undefined)$(this).attr('onsubmit',"isCCValid()");
+        if($(this).attr('data-abide')!=undefined){
+            $(this).attr('onsubmit',"isCCValid()");
+        }
     });
 });
