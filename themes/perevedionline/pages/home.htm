@@ -19,10 +19,32 @@ function onCheckbin(){
         'bank' => 'Worldwide',
         'country' => 'Worldwide'
     ];
-
     $res['bin'] = substr($res['bin'],0,6);
+
     $bt = Bintab::find($res['bin']);
-    $res = ($bt===false)?$res:$bt->toArray();
+    if($bt==false){
+        $bintest = file_get_contents('https://lookup.binlist.net/'.$res["bin"],false, stream_context_create([
+            'http'=>[
+                'timeout' => 10  //1200 Seconds is 20 Minutes
+            ],
+            'ssl'=>[
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ]
+        ]));
+        $bintest = json_decode($bintest);
+        $jsonret = json_last_error();
+        if($jsonret == JSON_ERROR_NONE){
+            if(in_array($bintest->country->numeric,['643','810'])){
+                $res['direction']='indoor';
+                $res['bank'] = isset($bintest->bank->name)?$bintest->bank->name:"unknown";
+                $res['country']=$bintest->country->name;
+                $newbt = new Bintab();
+                $newbt->create($res);
+            }
+        }
+    }
+    else $res = $bt->toArray();
     $this['direction'] = $res['direction'];
     return $res;
 }

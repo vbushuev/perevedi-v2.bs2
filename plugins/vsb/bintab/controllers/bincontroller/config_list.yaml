@@ -1,0 +1,11 @@
+list: $/vsb/bintab/models/bintablist/columns.yaml
+modelClass: vsb\BinTab\Models\Bintablist
+title: BinController
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'vsb/bintab/bincontroller/update/:id'

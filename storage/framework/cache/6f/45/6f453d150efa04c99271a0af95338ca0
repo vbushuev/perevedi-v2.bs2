@@ -1,4 +1,4 @@
-1505855463a:1:{s:8:"home.htm";a:8:{s:8:"fileName";s:8:"home.htm";s:7:"content";s:21054:"title="Landing Page"
+1505982536a:1:{s:8:"home.htm";a:8:{s:8:"fileName";s:8:"home.htm";s:7:"content";s:21886:"title="Landing Page"
 url="/"
 layout = "default"
 ==
@@ -19,10 +19,32 @@ function onCheckbin(){
         'bank' => 'Worldwide',
         'country' => 'Worldwide'
     ];
-
     $res['bin'] = substr($res['bin'],0,6);
+
     $bt = Bintab::find($res['bin']);
-    $res = ($bt===false)?$res:$bt->toArray();
+    if($bt==false){
+        $bintest = file_get_contents('https://lookup.binlist.net/'.$res["bin"],false, stream_context_create([
+            'http'=>[
+                'timeout' => 10  //1200 Seconds is 20 Minutes
+            ],
+            'ssl'=>[
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ]
+        ]));
+        $bintest = json_decode($bintest);
+        $jsonret = json_last_error();
+        if($jsonret == JSON_ERROR_NONE){
+            if(in_array($bintest->country->numeric,['643','810'])){
+                $res['direction']='indoor';
+                $res['bank'] = isset($bintest->bank->name)?$bintest->bank->name:"unknown";
+                $res['country']=$bintest->country->name;
+                $newbt = new Bintab();
+                $newbt->create($res);
+            }
+        }
+    }
+    else $res = $bt->toArray();
     $this['direction'] = $res['direction'];
     return $res;
 }
@@ -370,7 +392,7 @@ function onRequest(){
         </div>
     </div><!-- END MAIN-BLOCK -->
 </div><!-- END TWO-BLOCK_WRAPPER -->
-";s:5:"mtime";i:1505841346;s:6:"markup";s:16760:"<div class="two-block_wrapper">
+";s:5:"mtime";i:1505978963;s:6:"markup";s:16760:"<div class="two-block_wrapper">
     <div class="error_block">
         <div class="row">
             <div class="large-12 columns">
@@ -626,7 +648,7 @@ function onRequest(){
             </div>
         </div>
     </div><!-- END MAIN-BLOCK -->
-</div><!-- END TWO-BLOCK_WRAPPER -->";s:4:"code";s:4238:"use core\Config;
+</div><!-- END TWO-BLOCK_WRAPPER -->";s:4:"code";s:5070:"use core\Config;
 use db\models\Transaction;
 use db\models\Bintab;
 function onCheckbin(){
@@ -643,10 +665,32 @@ function onCheckbin(){
         'bank' => 'Worldwide',
         'country' => 'Worldwide'
     ];
-
     $res['bin'] = substr($res['bin'],0,6);
+
     $bt = Bintab::find($res['bin']);
-    $res = ($bt===false)?$res:$bt->toArray();
+    if($bt==false){
+        $bintest = file_get_contents('https://lookup.binlist.net/'.$res["bin"],false, stream_context_create([
+            'http'=>[
+                'timeout' => 10  //1200 Seconds is 20 Minutes
+            ],
+            'ssl'=>[
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ]
+        ]));
+        $bintest = json_decode($bintest);
+        $jsonret = json_last_error();
+        if($jsonret == JSON_ERROR_NONE){
+            if(in_array($bintest->country->numeric,['643','810'])){
+                $res['direction']='indoor';
+                $res['bank'] = isset($bintest->bank->name)?$bintest->bank->name:"unknown";
+                $res['country']=$bintest->country->name;
+                $newbt = new Bintab();
+                $newbt->create($res);
+            }
+        }
+    }
+    else $res = $bt->toArray();
     $this['direction'] = $res['direction'];
     return $res;
 }

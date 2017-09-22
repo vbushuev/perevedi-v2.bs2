@@ -1,0 +1,11 @@
+plugin:
+    name: 'vsb.bintab::lang.plugin.name'
+    description: 'vsb.bintab::lang.plugin.description'
+    author: 'Vladimir Bushuev'
+    icon: oc-icon-cc
+    homepage: ''
+navigation:
+    main-menu-item2:
+        label: 'BIN LIST'
+        url: vsb/bintab/bintablistcontroller
+        icon: icon-credit-card
