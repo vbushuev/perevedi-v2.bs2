@@ -1,0 +1,10 @@
+columns:
+    bin:
+        label: BIN
+        type: text
+    bank:
+        label: BANK
+        type: text
+    country:
+        label: Country
+        type: text

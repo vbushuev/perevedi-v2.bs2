@@ -1,0 +1,8 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table vsb_bintab_list'
+    - builder_table_create_vsb_bintab_list.php
+1.0.3:
+    - 'Created table vsb_bintab_list'
+    - builder_table_create_vsb_bintab_list_2.php

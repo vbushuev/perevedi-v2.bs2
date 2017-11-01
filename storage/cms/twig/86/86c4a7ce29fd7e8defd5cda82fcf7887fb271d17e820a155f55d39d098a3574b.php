@@ -19,10 +19,13 @@ class __TwigTemplate_ec153027bf8b9c9ae1fbcd346af7264463cf738b920c30f6dbbda06b791
         echo "<div class=\"row\">
   <div class=\"large-8 column\">
     <div class=\"logo\">
-      <img src=\"";
-        // line 4
+        <a href=\"/\">
+            <img src=\"";
+        // line 5
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/img/logo.png");
         echo "\" alt=\"Perevedi.online\">
+        </a>
+
     </div><!-- END LOGO -->
   </div>
   <div class=\"large-4 column\">
@@ -64,7 +67,7 @@ class __TwigTemplate_ec153027bf8b9c9ae1fbcd346af7264463cf738b920c30f6dbbda06b791
 
     public function getDebugInfo()
     {
-        return array (  24 => 4,  19 => 1,);
+        return array (  25 => 5,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -80,7 +83,10 @@ class __TwigTemplate_ec153027bf8b9c9ae1fbcd346af7264463cf738b920c30f6dbbda06b791
         return new Twig_Source("<div class=\"row\">
   <div class=\"large-8 column\">
     <div class=\"logo\">
-      <img src=\"{{ 'assets/img/logo.png'|theme }}\" alt=\"Perevedi.online\">
+        <a href=\"/\">
+            <img src=\"{{ 'assets/img/logo.png'|theme }}\" alt=\"Perevedi.online\">
+        </a>
+
     </div><!-- END LOGO -->
   </div>
   <div class=\"large-4 column\">

@@ -19,7 +19,7 @@
     <meta name="theme-color" content="#ffffff">
   </head>
   <body style="position:relative">
-        <div style="position:fixed; top:8px;right:16px;color:rgba(255,255,255,.32);font-size:10px;">v.1.3.7</div>
+        <div style="position:fixed; top:8px;right:16px;color:rgba(255,255,255,.32);font-size:10px;">v.1.3.8</div>
       <ul class="lang-menu" style="display:none;">
             <li><a href="#" class="lang" title="Русский" id="rus">РУС</a></li>
             <li><a href="#" class="lang" title="Українська" id="ukr">УКР</a></li>
@@ -63,7 +63,7 @@
                             <div class="input-form-field">
                                 <div class="input-form-field-label translate-it" key="cardnumber">Номер карты</div>
                                 <div class="input-form-field-value">
-                                    <input type="text" class="card-wrap_card_input__text transfer-pan-from-" onkeyup="$('#cardnumber').val($(this).val().replace(/\D/g,''))">
+                                    <input type="text" required class="card-wrap_card_input__text transfer-pan-from-" onkeyup="$('#cardnumber').val($(this).val().replace(/\D/g,''))">
                                     <input id="cardnumber" type="hidden" pattern="card"  name="${CARDNO}">
                                     <input type="hidden" value="Perevedi Online" name="${CARDHOLDER}"/>
                                 </div>
@@ -73,13 +73,13 @@
                         <div class="card-wrap_card_data-input">
                             <div class="card-wrap_card_data-input__m-wrap clearfix">
                                 <div class="card-wrap_card_data-input__m-wrap_item">
-                                    <input type="number" min="1" max="12" class="card-wrap_card_data-input__m-wrap_month" placeholder="ММ" name="${EXPMONTH}">
+                                    <input type="number" required min="1" max="12" class="card-wrap_card_data-input__m-wrap_month" placeholder="ММ" name="${EXPMONTH}">
                                 </div>
                                 <div class="card-wrap_card_data-input__m-wrap_item">
-                                    <input type="number" min="1" max="99" class="card-wrap_card_data-input__m-wrap_year" placeholder="YY" name="${EXPYEAR}">
+                                    <input type="number" required min="1" max="99" class="card-wrap_card_data-input__m-wrap_year" placeholder="YY" name="${EXPYEAR}">
                                 </div>
                                 <div class="card-wrap_card_data-input__m-wrap_item__cvv">
-                                    <input type="number" min="1" max="999" class="card-wrap_card_data-input__m-wrap_cvv" placeholder="CVV/CVC2" pattern="cvv" name="${CVV2}">
+                                    <input type="number" required min="1" max="999" class="card-wrap_card_data-input__m-wrap_cvv" placeholder="CVV/CVC2" pattern="cvv" name="${CVV2}">
                                 </div>
                                 <div class="about_cvv__wrap">
                                     <a href="#!" class="about_cvv">?</a>
@@ -122,7 +122,10 @@
                 <!-- <input name="submit" onclick="return isCCValid(document.getElementById('cardnumber').value);" type="submit" value="Pay"/> -->
                     $!{INTERNAL_SECTION}
                     #if($!card_error)
-                        <div class="pne-card-error" style="color: red;">$!card_error</div>
+                        <div class="pne-card-error" style="color: red;">
+                            $!card_error
+                            many many many text is thare to testline wifth ...
+                        </div>
                     #end
               </div>
           </div>
@@ -148,7 +151,7 @@
                         <!-- <input type="text" class="card-wrap_card_input__text transfer-pan-to" placeholder="НОМЕР КАРТЫ" pattern="card" name="${DESTINATIONCARDNO}" > -->
                         <!-- <input id="cardnumberto" type="text" class="card-wrap_card_input__text transfer-pan-to-" pattern="card"  name="${DESTINATIONCARDNO}"> -->
 
-                        <input type="text" class="card-wrap_card_input__text transfer-pan-from-" onkeyup="$('#cardnumberto').val($(this).val().replace(/\D/g,''))">
+                        <input type="text" required class="card-wrap_card_input__text transfer-pan-from-" onkeyup="$('#cardnumberto').val($(this).val().replace(/\D/g,''))">
                         <input id="cardnumberto" type="hidden" pattern="card"  name="${DESTINATIONCARDNO}">
                     </div>
                     <div class="input-form-field-error" data-validate-error></div>

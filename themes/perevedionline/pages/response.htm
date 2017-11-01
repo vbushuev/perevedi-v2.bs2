@@ -4,31 +4,7 @@ layout="response"
 ==
 use db\models\Transaction;
 function onStart(){
-    //$this['success']=true;
     $data = file_get_contents('php://input');
-    /*
-
-    error_message=Not+sufficient+funds
-    &processor-tx-id=
-    &merchant_order=128
-    &orderid=98848757
-    &client_orderid=128
-    &bin=546938
-    &control=2c25ffef72717cacdf9ab73b8e86e41e477b85da
-    &descriptor=dengisend.ru
-    &type=transfer
-    &card-type=MASTERCARD
-    &phone=%2B79265766710
-    &last-four-digits=5468
-    &card-holder-name=Perevedi+Online
-    &error_code=90052
-    &dest-last-four-digits=8039
-    &dest-bin=548673
-    &dest-card-type=MASTERCARD
-    &status=declined
-
-    */
-
     $dataArr = [];
     parse_str($data,$dataArr);
     $this['response'] = '['.join($dataArr,'],[').']';
@@ -40,8 +16,8 @@ function onStart(){
     try{
         $obj = new \Garan24\Gateway\Ariuspay\CallbackResponse($r,function($d){});
         if($obj->accept()){
-            $this['success']=true;
             $trx = Transaction::find($dataArr['merchant_order']);
+            $this['success']=true;
             $this['amount']=floatval($trx->amount)+floatval($trx->fee);
             $this['panfrom'] = $dataArr['bin']."******".$dataArr['last-four-digits'];
             $this['panto'] = $dataArr['dest-bin']."******".$dataArr['dest-last-four-digits'];
@@ -56,7 +32,14 @@ function onStart(){
         $this['message'] = isset($dataArr['error_message'])?$dataArr['error_message']:'error message';
     }
 }
-
+function onEmail(){
+    $data = $_POST;
+    Mail::send('cheque', $data, function($message)use($data){
+        $message->to($data['email'], $data['email']);
+        $message->subject('Чек по операции '.(isset($data['order_id'])?$data['order_id']:join(array_keys($data))));
+    });
+    //Mail::sendTo(,'cheque',$_POST);
+}
 ==
 <div class="two-block_wrapper">
     <div class="transaction-operation">
@@ -165,16 +148,26 @@ function onStart(){
                 <p class="success-operation_text"><span class="translate-it" key="keep_your_check">Рекомендуем сохранить ваш чек</span></p>
             </div>
         </div>
-        <form action="#!" data-abide class="success-operation__form">
+        <form data-abide class="success-operation__form"
+            data-request="onEmail"
+            data-request-success="console.log(data)"
+            data-request-validate>
+            <input type="hidden" name="amount" value="{{amount}}"/>
+            <input type="hidden" name="panfrom" value="{{panfrom}}"/>
+            <input type="hidden" name="panto" value="{{panto}}"/>
+            <input type="hidden" name="date" value="{{date}}"/>
+            <input type="hidden" name="order_id" value="{{order_id}}"/>
+            <input type="hidden" name="fee" value="{{fee}}"/>
+            <input type="hidden" name="total" value="{{total}}"/>
             <div class="row">
                 <div class="large-1 large-offset-2 columns">
-                    <button class="button expanded success-operation-button">ok</button>
+                    <button class="button expanded success-operation-button" onclick="document.location.href='/';">ok</button>
                 </div>
                 <div class="large-3 columns">
                     <button class="button expanded success-operation-button print-btn translate-it" key="print">распечатать</button>
                 </div>
                 <div class="large-3 columns">
-                    <input type="email" class="email-input" pattern="email" placeholder="ВВЕДИТЕ ВАШ E-MAIL">
+                    <input type="email" class="email-input" name="email" placeholder="ВВЕДИТЕ ВАШ E-MAIL" required>
                 </div>
                 <div class="large-3 columns">
                     <button class="button expanded success-operation-button translate-it" key="send_email">отправить</button>
@@ -196,7 +189,4 @@ function onStart(){
         </div>
     </div><!-- END ERROR_BLOCK -->
     {% endif %}
-    <code>
-        {{response}}
-    </code>
 </div><!-- END TWO-BLOCK_WRAPPER -->

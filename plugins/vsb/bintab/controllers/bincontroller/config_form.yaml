@@ -1,0 +1,10 @@
+name: BinController
+form: $/vsb/bintab/models/bintablist/fields.yaml
+modelClass: vsb\BinTab\Models\Bintablist
+defaultRedirect: vsb/bintab/bincontroller
+create:
+    redirect: 'vsb/bintab/bincontroller/update/:id'
+    redirectClose: vsb/bintab/bincontroller
+update:
+    redirect: vsb/bintab/bincontroller
+    redirectClose: vsb/bintab/bincontroller

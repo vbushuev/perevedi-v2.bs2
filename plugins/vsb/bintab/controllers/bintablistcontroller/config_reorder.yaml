@@ -1,0 +1,4 @@
+title: BintabListcontroller
+modelClass: vsb\BinTab\Models\Bintablist
+toolbar:
+    buttons: reorder_toolbar

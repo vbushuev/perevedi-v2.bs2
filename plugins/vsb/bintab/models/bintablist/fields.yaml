@@ -1,0 +1,7 @@
+fields:
+    bin:
+        label: BIN
+        oc.commentPosition: ''
+        span: auto
+        placeholder: 'Введите BIN'
+        type: text
