@@ -10,9 +10,7 @@ $('.lang').click(function(e) {
 	e.preventDefault();
 	//переключение локали
 	var lang = $(this).attr('id');
-	$('[name=lang]').val(lang);
 	$.cookie('curLang', lang);
-
 
 //правим перевод placeholder
 if (lang === 'ukr') {
@@ -24,13 +22,13 @@ if (lang === 'ukr') {
 }
 
 //правим перевод placeholder главный экран
-// if (lang === 'ukr') {
-// 	$('.card-wrap_card_input__summ').attr('placeholder', 'СУМА ПЕРЕКАЗУ');
-// } else if (lang === 'eng') {
-// 	$('.card-wrap_card_input__summ').attr('placeholder', 'TRANSFER AMOUNT');
-// } else {
-// 	$('.card-wrap_card_input__summ').attr('placeholder', 'СУММА ПЕРЕВОДА');
-// }
+if (lang === 'ukr') {
+	$('.card-wrap_card_input__summ').attr('placeholder', 'СУМА ПЕРЕКАЗУ');
+} else if (lang === 'eng') {
+	$('.card-wrap_card_input__summ').attr('placeholder', 'TRANSFER AMOUNT');
+} else {
+	$('.card-wrap_card_input__summ').attr('placeholder', 'КАРТА ПОЛУЧАТЕЛЯ');
+}
 
 //правим email-input в успешном переводе
 if (lang === 'ukr') {
@@ -107,21 +105,13 @@ if (lang === 'ukr') {
 	$('.card-wrap_card_input__text').text('CARD NUMBER');
 } else {
 	$('.card-wrap_card_input__text').text('НОМЕР КАРТЫ');
-}
+}	
 	};
 //end проверка есть ли что в куки
 
 //перевод на лету
 	$('.translate-it').each(function(){
-		if(lang!=undefined && arrLang != undefined  && arrLang[lang]!=undefined){
-			try{
-				$(this).text(arrLang[lang][$(this).attr('key')]);
-			}
-			catch(e){
-				console.error($(this).text()+' translate error',e);
-			}
-		}
-
+		$(this).text(arrLang[lang][$(this).attr('key')]);
 	});
 //end перевод на лету
 
@@ -133,9 +123,9 @@ var chBox = $('#agreement');
 	chBox.change(function(){
 		isChek = chBox.is(':checked');
 		if (isChek) {
-				$('.send-transfer').removeAttr('disabled', 'disabled');
+				$('.start-transfer').removeAttr('disabled', 'disabled');
 		}else{
-				$('.send-transfer').attr('disabled', 'disabled');
+				$('.start-transfer').attr('disabled', 'disabled');
 		};
 	});
 //end agreement

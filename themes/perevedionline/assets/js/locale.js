@@ -1,14 +1,13 @@
 var arrLang = {
   'eng' : {
-      'send_email':'Send',
     'tarif' : 'Rates',
     'contacts' : 'Contacts',
     'about_service' : 'About',
     'faq' : 'Issues',
     'questions' : 'Frequently asked Questions',
-    'send money outside' : 'Send money outside of Russia',
-    'from card to card' : 'From card to card?',
-    'easily' : 'It’s Easily',
+    'send money outside' : 'Card to card transfer',
+    'from card to card' : 'Any card',
+    'easily' : 'Any Bank',
     'commission' : 'Commission',
     'start_translating' : 'start translating',
     'crediting_instantly' : 'Crediting instantly',
@@ -41,7 +40,6 @@ var arrLang = {
     'operation_time' : 'Operation time',
     'operation_id' : 'Operation ID',
     'transfer_amount' : 'Amount',
-    'transfer_amount_debit' : 'Debit amount',
     'fee' : 'Fee',
     'keep_your_check' : 'We recommend that you keep your check',
     'print' : 'Print',
@@ -131,18 +129,17 @@ var arrLang = {
     'your_email' : 'e-mail',
     'message' : 'message',
     'capcha' : 'capcha',
-    'transfer_pan_to' : 'Reciever\'s card'
+    'send-msg':'send'
   },
   'rus' : {
-      'send_email':'Отправить',
     'tarif' : 'тарифы',
     'contacts' : 'Контакты',
     'about_service' : 'О сервисе',
     'faq' : 'вопросы',
     'questions' : 'Часто задаваемые вопросы',
-    'send money outside' : 'Перевести деньги за пределы России',
-    'from card to card' : 'С карты на карту?',
-    'easily' : 'Легко',
+    'send money outside' : 'перевод с карты на карту',
+    'from card to card' : 'между любыми картами',
+    'easily' : 'любых банков',
     'commission' : 'Комиссия',
     'start_translating' : 'начать перевод',
     'crediting_instantly' : 'Зачисление мгновенно',
@@ -264,10 +261,9 @@ var arrLang = {
     'your_email' : 'ваш e-mail',
     'message' : 'сообщение',
     'capcha' : 'код рисунка',
-    'transfer_pan_to' : 'Карта получателя'
+    'send-msg' : 'отправить'
   },
   'ukr' : {
-      'send_email':'Відправити',
     'tarif' : 'тарифi',
     'contacts' : 'Контакти',
     'about_service' : 'Про сервіс',
@@ -308,7 +304,6 @@ var arrLang = {
     'operation_time' : 'Час операції',
     'operation_id' : 'ID операції',
     'transfer_amount' : 'Сума переказу',
-    'transfer_amount_debit' : 'Сума переказу',
     'fee' : 'Комісія',
     'keep_your_check' : 'Рекомендуємо зберегти ваш чек',
     'print' : 'Роздрукувати',
@@ -398,8 +393,6 @@ var arrLang = {
     'your_email' : 'ваш e-mail',
     'message' : 'повідомлення',
     'capcha' : 'код малюнка',
-    'transfer_pan_to' : 'Карта получателя'
-
-
+    'send-msg' : 'Відправити'
   }
 }
