@@ -16,18 +16,21 @@ class __TwigTemplate_f7a0773ac2d569586f8fe0569cf5cd868be4faa6bade7e0579f04a52dbe
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        echo "<div class=\"row\">
-  <div class=\"large-10 columns\">
-    <ul class=\"footer_menu\">
-      <li><a href=\"offer-Rentkomplekt.pdf\" target=\"_blank\" class=\"translate-it\" key=\"service_offer\">Оферта сервиса</a></li>
-      <li><a href=\"offer-brs.pdf\" target=\"_blank\" class=\"translate-it\" key=\"brs_for_cross-boarders\">Оферта эквайера БРС для кросс бордеров</a></li>
-      <li><a href=\"offer-binbank.pdf\" target=\"_blank\" class=\"translate-it\" key=\"offer_of_the_acquirer\">Оферта эквайера Бинбанка для российских переводов</a></li>
-    </ul>
+        echo "<footer class=\"footer\">
+  <div class=\"row\">
+    <div class=\"large-10 columns\">
+      <ul class=\"footer_menu\">
+        <!-- <li><a href=\"";
+        // line 5
+        echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/offer-Rentkomplekt.pdf");
+        echo "\" target=\"_blank\" class=\"translate-it\" key=\"service_offer\">Оферта сервиса</a></li> -->
+      </ul>
+    </div>
+    <div class=\"large-2 columns\">
+       <span class=\"copyright\">© 2017 Copyright</span>
+    </div>
   </div>
-  <div class=\"large-2 columns\">
-     <span class=\"copyright\">© 2017 Perevedi.online</span>
-  </div>
-</div>";
+</footer>";
     }
 
     public function getTemplateName()
@@ -35,9 +38,14 @@ class __TwigTemplate_f7a0773ac2d569586f8fe0569cf5cd868be4faa6bade7e0579f04a52dbe
         return "/Applications/AMPPS/www/perevedi-v2.bs2/themes/perevedionline/partials/site/footer.htm";
     }
 
+    public function isTraitable()
+    {
+        return false;
+    }
+
     public function getDebugInfo()
     {
-        return array (  19 => 1,);
+        return array (  25 => 5,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -50,17 +58,17 @@ class __TwigTemplate_f7a0773ac2d569586f8fe0569cf5cd868be4faa6bade7e0579f04a52dbe
 
     public function getSourceContext()
     {
-        return new Twig_Source("<div class=\"row\">
-  <div class=\"large-10 columns\">
-    <ul class=\"footer_menu\">
-      <li><a href=\"offer-Rentkomplekt.pdf\" target=\"_blank\" class=\"translate-it\" key=\"service_offer\">Оферта сервиса</a></li>
-      <li><a href=\"offer-brs.pdf\" target=\"_blank\" class=\"translate-it\" key=\"brs_for_cross-boarders\">Оферта эквайера БРС для кросс бордеров</a></li>
-      <li><a href=\"offer-binbank.pdf\" target=\"_blank\" class=\"translate-it\" key=\"offer_of_the_acquirer\">Оферта эквайера Бинбанка для российских переводов</a></li>
-    </ul>
+        return new Twig_Source("<footer class=\"footer\">
+  <div class=\"row\">
+    <div class=\"large-10 columns\">
+      <ul class=\"footer_menu\">
+        <!-- <li><a href=\"{{ 'assets/offer-Rentkomplekt.pdf'|theme }}\" target=\"_blank\" class=\"translate-it\" key=\"service_offer\">Оферта сервиса</a></li> -->
+      </ul>
+    </div>
+    <div class=\"large-2 columns\">
+       <span class=\"copyright\">© 2017 Copyright</span>
+    </div>
   </div>
-  <div class=\"large-2 columns\">
-     <span class=\"copyright\">© 2017 Perevedi.online</span>
-  </div>
-</div>", "/Applications/AMPPS/www/perevedi-v2.bs2/themes/perevedionline/partials/site/footer.htm", "");
+</footer>", "/Applications/AMPPS/www/perevedi-v2.bs2/themes/perevedionline/partials/site/footer.htm", "");
     }
 }

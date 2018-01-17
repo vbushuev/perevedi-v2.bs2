@@ -66,126 +66,115 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/favicon.ico");
         echo "\"/>
     <meta name=\"theme-color\" content=\"#ffffff\">
+    <!-- Google Analytics -->
+    <script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-110543399-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
 </head>
 <body>
     <div class=\"loader\">
         <img src=\"";
-        // line 24
+        // line 32
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/img/loader.gif");
         echo "\" alt=\"\">
     </div>
     <section class=\"hero\">
         <header class=\"header\">
             ";
-        // line 28
+        // line 36
         $context['__cms_partial_params'] = [];
         echo $this->env->getExtension('CMS')->partialFunction("site/header"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 29
+        // line 37
         echo "        </header>
         ";
-        // line 30
+        // line 38
         echo $this->env->getExtension('CMS')->pageFunction();
-        // line 31
+        // line 39
         echo "    </section>
+
     ";
-        // line 32
-        $context['__cms_partial_params'] = [];
-        echo $this->env->getExtension('CMS')->partialFunction("site/about-service"        , $context['__cms_partial_params']        );
-        unset($context['__cms_partial_params']);
-        // line 33
-        echo "    ";
-        $context['__cms_partial_params'] = [];
-        echo $this->env->getExtension('CMS')->partialFunction("site/conditions"        , $context['__cms_partial_params']        );
-        unset($context['__cms_partial_params']);
-        // line 34
-        echo "    ";
-        $context['__cms_partial_params'] = [];
-        echo $this->env->getExtension('CMS')->partialFunction("site/faq"        , $context['__cms_partial_params']        );
-        unset($context['__cms_partial_params']);
-        // line 35
-        echo "    ";
-        $context['__cms_partial_params'] = [];
-        echo $this->env->getExtension('CMS')->partialFunction("site/contacts"        , $context['__cms_partial_params']        );
-        unset($context['__cms_partial_params']);
-        // line 36
-        echo "    <footer class=\"footer\">
-        ";
-        // line 37
+        // line 41
         $context['__cms_partial_params'] = [];
         echo $this->env->getExtension('CMS')->partialFunction("site/footer"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 38
-        echo "    </footer>
+        // line 42
+        echo "
     ";
-        // line 39
+        // line 43
         $context['__cms_partial_params'] = [];
         echo $this->env->getExtension('CMS')->partialFunction("site/support"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 40
+        // line 44
         echo "
     <script src=\"";
-        // line 41
+        // line 45
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/jquery.js");
         echo "\"></script>
     <script src=\"";
-        // line 42
+        // line 46
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/what-input.js");
         echo "\"></script>
     <script src=\"";
-        // line 43
+        // line 47
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/foundation.js");
         echo "\"></script>
     <script src=\"";
-        // line 44
+        // line 48
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/jquery.cookie.js");
         echo "\"></script>
 
     <script src=\"";
-        // line 46
+        // line 50
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/jquery.inputmask.bundle.js");
         echo "\"></script>
     <!-- <script src=\"";
-        // line 47
+        // line 51
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/phone-codes/phone.js");
         echo "\"></script>
     <script src=\"";
-        // line 48
+        // line 52
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/phone-codes/phone-be.js");
         echo "\"></script>
     <script src=\"";
-        // line 49
+        // line 53
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/vendor/phone-codes/phone-ru.js");
         echo "\"></script> -->
 
     <script src=\"";
-        // line 51
+        // line 55
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/app.js");
         echo "\"></script>
     <script src=\"";
-        // line 52
+        // line 56
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/locale.js");
         echo "\"></script>
     <script src=\"";
-        // line 53
+        // line 57
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/functions.js");
         echo "\"></script>
 
     <script src=\"";
-        // line 55
+        // line 59
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/vsb/js/app.js");
         echo "\"></script>
 
     ";
-        // line 57
+        // line 61
         echo '<script src="'. Request::getBasePath()
                 .'/modules/system/assets/js/framework.js"></script>'.PHP_EOL;
         echo '<script src="'. Request::getBasePath()
                     .'/modules/system/assets/js/framework.extras.js"></script>'.PHP_EOL;
         echo '<link rel="stylesheet" property="stylesheet" href="'. Request::getBasePath()
                     .'/modules/system/assets/css/framework.extras.css">'.PHP_EOL;
-        // line 58
-        echo "  </body>
+        // line 62
+        echo "    <!-- Yandex.Metrika counter -->
+    <script type=\"text/javascript\"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter46894260 = new Ya.Metrika({ id:46894260, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); } catch(e) { } }); var n = d.getElementsByTagName(\"script\")[0], s = d.createElement(\"script\"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = \"text/javascript\"; s.async = true; s.src = \"https://mc.yandex.ru/metrika/watch.js\"; if (w.opera == \"[object Opera]\") { d.addEventListener(\"DOMContentLoaded\", f, false); } else { f(); } })(document, window, \"yandex_metrika_callbacks\"); </script> <noscript><div><img src=\"https://mc.yandex.ru/watch/46894260\" style=\"position:absolute; left:-9999px;\" alt=\"\" /></div></noscript> <!-- /Yandex.Metrika counter -->
+  </body>
 </html>";
     }
 
@@ -201,7 +190,7 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
 
     public function getDebugInfo()
     {
-        return array (  188 => 58,  181 => 57,  176 => 55,  171 => 53,  167 => 52,  163 => 51,  158 => 49,  154 => 48,  150 => 47,  146 => 46,  141 => 44,  137 => 43,  133 => 42,  129 => 41,  126 => 40,  122 => 39,  119 => 38,  115 => 37,  112 => 36,  107 => 35,  102 => 34,  97 => 33,  93 => 32,  90 => 31,  88 => 30,  85 => 29,  81 => 28,  74 => 24,  66 => 19,  62 => 18,  58 => 17,  54 => 16,  50 => 15,  46 => 14,  40 => 11,  36 => 10,  32 => 9,  28 => 8,  19 => 1,);
+        return array (  175 => 62,  168 => 61,  163 => 59,  158 => 57,  154 => 56,  150 => 55,  145 => 53,  141 => 52,  137 => 51,  133 => 50,  128 => 48,  124 => 47,  120 => 46,  116 => 45,  113 => 44,  109 => 43,  106 => 42,  102 => 41,  98 => 39,  96 => 38,  93 => 37,  89 => 36,  82 => 32,  66 => 19,  62 => 18,  58 => 17,  54 => 16,  50 => 15,  46 => 14,  40 => 11,  36 => 10,  32 => 9,  28 => 8,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -234,6 +223,14 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
     <link rel=\"mask-icon\" href=\"{{ 'assets/img/favicons/safari-pinned-tab.svg'|theme }}\" color=\"#5bbad5\">
     <link rel=\"shortcut icon\" href=\"{{ 'assets/favicon.ico'|theme }}\"/>
     <meta name=\"theme-color\" content=\"#ffffff\">
+    <!-- Google Analytics -->
+    <script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-110543399-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
 </head>
 <body>
     <div class=\"loader\">
@@ -245,13 +242,9 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
         </header>
         {% page %}
     </section>
-    {% partial 'site/about-service' %}
-    {% partial 'site/conditions' %}
-    {% partial 'site/faq' %}
-    {% partial 'site/contacts' %}
-    <footer class=\"footer\">
-        {% partial 'site/footer' %}
-    </footer>
+
+    {% partial 'site/footer' %}
+
     {% partial 'site/support' %}
 
     <script src=\"{{ 'assets/js/vendor/jquery.js'|theme }}\"></script>
@@ -271,6 +264,8 @@ class __TwigTemplate_65933d06b2d75d4a28990f561f4598e37accc47e47686724210b8c88e08
     <script src=\"{{ 'assets/vsb/js/app.js'|theme }}\"></script>
 
     {% framework extras %}
+    <!-- Yandex.Metrika counter -->
+    <script type=\"text/javascript\"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter46894260 = new Ya.Metrika({ id:46894260, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); } catch(e) { } }); var n = d.getElementsByTagName(\"script\")[0], s = d.createElement(\"script\"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = \"text/javascript\"; s.async = true; s.src = \"https://mc.yandex.ru/metrika/watch.js\"; if (w.opera == \"[object Opera]\") { d.addEventListener(\"DOMContentLoaded\", f, false); } else { f(); } })(document, window, \"yandex_metrika_callbacks\"); </script> <noscript><div><img src=\"https://mc.yandex.ru/watch/46894260\" style=\"position:absolute; left:-9999px;\" alt=\"\" /></div></noscript> <!-- /Yandex.Metrika counter -->
   </body>
 </html>", "/Applications/AMPPS/www/perevedi-v2.bs2/themes/perevedionline/layouts/default.htm", "");
     }

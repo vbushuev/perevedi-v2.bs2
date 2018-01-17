@@ -1,4 +1,4 @@
-1509598814a:1:{s:8:"home.htm";a:8:{s:8:"fileName";s:8:"home.htm";s:7:"content";s:21886:"title="Landing Page"
+1516169122a:1:{s:8:"home.htm";a:8:{s:8:"fileName";s:8:"home.htm";s:7:"content";s:21485:"title="Landing Page"
 url="/"
 layout = "default"
 ==
@@ -112,7 +112,7 @@ function onRequest(){
             //"merchant_data" => "VIP customer"
         ]
     ];
-    if($direction=='crossboard')$saleData["data"]["ssn"] = "10001".rand(100,492);
+    if($direction=='crossboard')$saleData["data"]["ssn"] = "10001".rand(200,492);
     $saleData = array_merge($pne[$aquere][$direction][$operation],$saleData);
     // print_r($saleData);exit;
     $request = new \Garan24\Gateway\Ariuspay\PreauthRequest($saleData);
@@ -287,18 +287,6 @@ function onRequest(){
             data-request-validate>
             <div class="row">
                 <div class="large-5 columns large-offset-1">
-                    <!-- <div class="row">
-                        <div class="large-9 columns">
-                            <div class="cur-select_wrap">
-                                <label>
-                                    <select class="cur-select" name="direction">
-                                        <option value="indoor">По России</option>
-                                        <option value="crossboard">Зарубеж</option>
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                    </div> -->
                     <input type="hidden" name="lang" class="cur-select" value="rus" />
                     <input type="hidden" name="fee" class="cur-select" value="0" />
 
@@ -313,9 +301,6 @@ function onRequest(){
                                 </div>
                                 <div class="input-form-field-error" data-validate-error></div>
                             </div>
-
-                            <!-- Validation message for the field -->
-                            <!-- <div data-validate-for="amount"></div> -->
                         </div>
                         <div class="large-3 columns">
                             <div class="cur-select_wrap">
@@ -348,16 +333,6 @@ function onRequest(){
                             <!-- <input type="number" class="card-wrap_card_input__summ transfer-amount-to" placeholder="СУММА К ПОЛУЧЕНИЮ"> -->
                         </div>
                         <div class="large-3 columns">
-<!--
-                            <div class="cur-select_wrap">
-                                <label>
-                                    <select class="cur-select" name="currencyto">
-                                        <option value="RUB">RUB</option>
-                                        <option value="GRN">UAH</option>
-                                        <option value="USD">USD</option>
-                                    </select>
-                                </label>
-                            </div> -->
                         </div>
                     </div><!-- OUTGOIN SUMM -->
                     <div class="row">
@@ -382,6 +357,16 @@ function onRequest(){
             </div>
         </form><!-- END INPUT FORM -->
         <div class="row">
+          <div class="large-11 large-offset-1 columns">
+            <div class="agreement-chbx_wrapper">
+              <input id="agreement" type="checkbox" required="required" checked="checked">
+              <label for="agreement" class="css-label"><span class="translate-it" key="i_accept_the_terms_of_use_of">Я принимаю условия использования</span>
+                  <a href="{{ 'assets/offer-Rentkomplekt.pdf'|theme }}" class="translate-it" key="the_service" target="_blank">сервиса</a> <span class="translate-it" key="and">и</span>
+                  <a href="{{ 'assets/offer-binbank.pdf'|theme }}" class="translate-it" key="the_public_offer"  target="_blank">публичной оферты</a> <span class="translate-it" key="of_the_acquiring_banks">банков-эквайров</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
             <div class="large-12 columns">
                 <div class="first-scr_comment__wrap">
                     <p>
@@ -392,7 +377,7 @@ function onRequest(){
         </div>
     </div><!-- END MAIN-BLOCK -->
 </div><!-- END TWO-BLOCK_WRAPPER -->
-";s:5:"mtime";i:1509532983;s:6:"markup";s:16760:"<div class="two-block_wrapper">
+";s:5:"mtime";i:1512142234;s:6:"markup";s:16359:"<div class="two-block_wrapper">
     <div class="error_block">
         <div class="row">
             <div class="large-12 columns">
@@ -544,18 +529,6 @@ function onRequest(){
             data-request-validate>
             <div class="row">
                 <div class="large-5 columns large-offset-1">
-                    <!-- <div class="row">
-                        <div class="large-9 columns">
-                            <div class="cur-select_wrap">
-                                <label>
-                                    <select class="cur-select" name="direction">
-                                        <option value="indoor">По России</option>
-                                        <option value="crossboard">Зарубеж</option>
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                    </div> -->
                     <input type="hidden" name="lang" class="cur-select" value="rus" />
                     <input type="hidden" name="fee" class="cur-select" value="0" />
 
@@ -570,9 +543,6 @@ function onRequest(){
                                 </div>
                                 <div class="input-form-field-error" data-validate-error></div>
                             </div>
-
-                            <!-- Validation message for the field -->
-                            <!-- <div data-validate-for="amount"></div> -->
                         </div>
                         <div class="large-3 columns">
                             <div class="cur-select_wrap">
@@ -605,16 +575,6 @@ function onRequest(){
                             <!-- <input type="number" class="card-wrap_card_input__summ transfer-amount-to" placeholder="СУММА К ПОЛУЧЕНИЮ"> -->
                         </div>
                         <div class="large-3 columns">
-<!--
-                            <div class="cur-select_wrap">
-                                <label>
-                                    <select class="cur-select" name="currencyto">
-                                        <option value="RUB">RUB</option>
-                                        <option value="GRN">UAH</option>
-                                        <option value="USD">USD</option>
-                                    </select>
-                                </label>
-                            </div> -->
                         </div>
                     </div><!-- OUTGOIN SUMM -->
                     <div class="row">
@@ -638,6 +598,16 @@ function onRequest(){
                 </div>
             </div>
         </form><!-- END INPUT FORM -->
+        <div class="row">
+          <div class="large-11 large-offset-1 columns">
+            <div class="agreement-chbx_wrapper">
+              <input id="agreement" type="checkbox" required="required" checked="checked">
+              <label for="agreement" class="css-label"><span class="translate-it" key="i_accept_the_terms_of_use_of">Я принимаю условия использования</span>
+                  <a href="{{ 'assets/offer-Rentkomplekt.pdf'|theme }}" class="translate-it" key="the_service" target="_blank">сервиса</a> <span class="translate-it" key="and">и</span>
+                  <a href="{{ 'assets/offer-binbank.pdf'|theme }}" class="translate-it" key="the_public_offer"  target="_blank">публичной оферты</a> <span class="translate-it" key="of_the_acquiring_banks">банков-эквайров</span></label>
+            </div>
+          </div>
+        </div>
         <div class="row">
             <div class="large-12 columns">
                 <div class="first-scr_comment__wrap">
@@ -758,7 +728,7 @@ function onRequest(){
             //"merchant_data" => "VIP customer"
         ]
     ];
-    if($direction=='crossboard')$saleData["data"]["ssn"] = "10001".rand(100,492);
+    if($direction=='crossboard')$saleData["data"]["ssn"] = "10001".rand(200,492);
     $saleData = array_merge($pne[$aquere][$direction][$operation],$saleData);
     // print_r($saleData);exit;
     $request = new \Garan24\Gateway\Ariuspay\PreauthRequest($saleData);

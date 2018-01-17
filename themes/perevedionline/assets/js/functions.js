@@ -105,13 +105,20 @@ if (lang === 'ukr') {
 	$('.card-wrap_card_input__text').text('CARD NUMBER');
 } else {
 	$('.card-wrap_card_input__text').text('НОМЕР КАРТЫ');
-}	
+}
 	};
 //end проверка есть ли что в куки
 
 //перевод на лету
 	$('.translate-it').each(function(){
-		$(this).text(arrLang[lang][$(this).attr('key')]);
+		try{
+			console.debug(lang);
+			if($(this).attr('key') != undefined)
+				$(this).text(arrLang[lang][$(this).attr('key')]);
+		}
+		catch(e){
+			console.error(e);
+		}
 	});
 //end перевод на лету
 

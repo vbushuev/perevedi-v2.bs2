@@ -127,7 +127,33 @@ function onEmail(){
             </div>
         </form>
     </div><!-- END TRANSACTION-OPERATION -->
+    <script>
+        try{
+            if(ga){
+                ga('ecommerce:addTransaction', {
+                  'id': '1234',
+                  'affiliation': 'Perevedi.online',
+                  'revenue': '{{amount}}',
+                  'currency': 'RUB'  // local currency code.
+                });
+                ga('ecommerce:send');
+            }
+        }
+        catch(e){
+            console.warn(e);
+        }
+    </script>
     {% if success %}
+    <script>
+        try{
+            if(yaCounter46894260)yaCounter46894260.reachGoal('GOAL_PAYMENT', {order_price: '{{amount}}', currency: 'RUB'});
+            if(ga) ga('send', 'event', 'Macro', 'Payment', '', '{{amount}}' );
+        }
+        catch(e){
+            console.warn(e);
+        }
+
+    </script>
     <div class="success-operation" style="display:block;" >
         <div class="row">
             <div class="large-6 columns large-centered">
@@ -176,6 +202,15 @@ function onEmail(){
         </form>
     </div><!-- END SUCCESS-OPERATION -->
     {% else %}
+    <script>
+        try{
+            if(ga)ga('send', 'event', 'Macro', 'Declined', '', '{{amount}}');
+        }
+        catch(e){
+            console.warn(e);
+        }
+
+    </script>
     <div class="error_block" style="display:block;">
         <div class="row">
             <div class="large-12 columns">
