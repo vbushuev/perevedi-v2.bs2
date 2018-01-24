@@ -35,7 +35,9 @@ function onCheckbin(){
         $bintest = json_decode($bintest);
         $jsonret = json_last_error();
         if($jsonret == JSON_ERROR_NONE){
-            if(in_array($bintest->country->numeric,['643','810'])){
+            if(isset($bintest) && !is_null($bintest)
+                && isset($bintest->country) && $bintest->country!='null' && !is_null($bintest->country)
+                && isset($bintest->country->numeric) && in_array($bintest->country->numeric,['643','810'])){
                 $res['direction']='indoor';
                 $res['bank'] = isset($bintest->bank->name)?$bintest->bank->name:"unknown";
                 $res['country']=$bintest->country->name;

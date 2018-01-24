@@ -127,8 +127,10 @@ function onEmail(){
             </div>
         </form>
     </div><!-- END TRANSACTION-OPERATION -->
+    {% if success %}
     <script>
         try{
+            if(yaCounter46894260)yaCounter46894260.reachGoal('GOAL_PAYMENT', {order_price: '{{amount}}', currency: 'RUB'});
             if(ga){
                 ga('ecommerce:addTransaction', {
                   'id': '1234',
@@ -137,17 +139,8 @@ function onEmail(){
                   'currency': 'RUB'  // local currency code.
                 });
                 ga('ecommerce:send');
+                ga('send', 'event', 'Macro', 'Payment', '', '{{amount}}' );
             }
-        }
-        catch(e){
-            console.warn(e);
-        }
-    </script>
-    {% if success %}
-    <script>
-        try{
-            if(yaCounter46894260)yaCounter46894260.reachGoal('GOAL_PAYMENT', {order_price: '{{amount}}', currency: 'RUB'});
-            if(ga) ga('send', 'event', 'Macro', 'Payment', '', '{{amount}}' );
         }
         catch(e){
             console.warn(e);
