@@ -1,7 +1,5 @@
 <?php namespace October\Rain\Database;
 
-use Exception;
-
 /**
  * Database driver dongle
  *
@@ -31,15 +29,6 @@ class Dongle
     {
         $this->db = $db;
         $this->driver = $driver;
-    }
-
-    /**
-     * @deprecated use App::hasDatabase()
-     * Remove this method if year >= 2017
-     */
-    public function hasDatabase()
-    {
-        return \App::hasDatabase();
     }
 
     /**

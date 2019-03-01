@@ -189,6 +189,16 @@
             }
         }
 
+        .table-search {
+            float: right;
+            margin: 3px 3px 0 0;
+
+            .table-search-input {
+                height: auto;
+                padding: 5px 13px 5px;
+            }
+        }
+
         a.table-icon {
             &:before {
                 display: inline-block;
@@ -466,9 +476,7 @@ html.cssanimations {
         cursor: pointer;
         outline: none;
 
-        &:hover,
-        &:focus,
-        &.selected {
+        &:focus {
             background: @color-focus;
             color: white;
         }

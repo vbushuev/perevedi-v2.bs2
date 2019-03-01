@@ -1,6 +1,7 @@
 <?php namespace Backend\Models;
 
 use App;
+use Backend;
 use Url;
 use File;
 use Lang;
@@ -21,17 +22,32 @@ class BrandSetting extends Model
     use \System\Traits\ViewMaker;
     use \October\Rain\Database\Traits\Validation;
 
-    public $implement = ['System.Behaviors.SettingsModel'];
+    /**
+     * @var array Behaviors implemented by this model.
+     */
+    public $implement = [
+        \System\Behaviors\SettingsModel::class
+    ];
 
+    /**
+     * @var string Unique code
+     */
     public $settingsCode = 'backend_brand_settings';
 
+    /**
+     * @var mixed Settings form field defitions
+     */
     public $settingsFields = 'fields.yaml';
 
     public $attachOne = [
-        'logo' => ['System\Models\File']
+        'favicon' => \System\Models\File::class,
+        'logo' => \System\Models\File::class
     ];
-
-    const CACHE_KEY = 'backend::brand.custom_css';
+    
+    /**
+     * @var string The key to store rendered CSS in the cache under
+     */
+    public $cacheKey = 'backend::brand.custom_css';
 
     const PRIMARY_COLOR   = '#34495e'; // Wet Asphalt
     const SECONDARY_COLOR = '#e67e22'; // Pumpkin
@@ -49,6 +65,11 @@ class BrandSetting extends Model
         'app_tagline'  => 'required',
     ];
 
+    /**
+     * Initialize the seed data for this model. This only executes when the
+     * model is first created or reset to default.
+     * @return void
+     */
     public function initSettingsData()
     {
         $config = App::make('config');
@@ -63,7 +84,18 @@ class BrandSetting extends Model
 
     public function afterSave()
     {
-        Cache::forget(self::CACHE_KEY);
+        Cache::forget(self::instance()->cacheKey);
+    }
+
+    public static function getFavicon()
+    {
+        $settings = self::instance();
+
+        if ($settings->favicon) {
+            return $settings->favicon->getPath();
+        }
+
+        return self::getDefaultFavicon() ?: null;
     }
 
     public static function getLogo()
@@ -79,13 +111,14 @@ class BrandSetting extends Model
 
     public static function renderCss()
     {
-        if (Cache::has(self::CACHE_KEY)) {
-            return Cache::get(self::CACHE_KEY);
+        $cacheKey = self::instance()->cacheKey;
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
         }
 
         try {
             $customCss = self::compileCss();
-            Cache::forever(self::CACHE_KEY, $customCss);
+            Cache::forever($cacheKey, $customCss);
         }
         catch (Exception $ex) {
             $customCss = '/* ' . $ex->getMessage() . ' */';
@@ -115,9 +148,7 @@ class BrandSetting extends Model
             self::get('custom_css')
         );
 
-        $css = $parser->getCss();
-
-        return $css;
+        return $parser->getCss();
     }
 
     //
@@ -127,6 +158,17 @@ class BrandSetting extends Model
     public static function isBaseConfigured()
     {
         return !!Config::get('brand');
+    }
+
+    public static function getDefaultFavicon()
+    {
+        $faviconPath = File::symbolizePath(Config::get('brand.faviconPath'));
+
+        if ($faviconPath && File::exists($faviconPath)) {
+            return Url::asset(File::localToPublic($faviconPath));
+        }
+
+        return Backend::skinAsset('assets/images/favicon.png');
     }
 
     public static function getDefaultLogo()

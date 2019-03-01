@@ -101,6 +101,7 @@ class Definitions
             'jpeg',
             'bmp',
             'png',
+            'webp',
             'gif',
             'svg',
             'js',
@@ -110,12 +111,16 @@ class Definitions
             'less',
             'scss',
             'ics',
+            'odt',
             'doc',
             'docx',
+            'ppt',
+            'pptx',
             'pdf',
             'swf',
             'txt',
             'xml',
+            'ods',
             'xls',
             'xlsx',
             'eot',
@@ -134,6 +139,7 @@ class Definitions
             'webm',
             'mkv',
             'rar',
+            'xml',
             'zip'
         ];
     }
@@ -150,6 +156,7 @@ class Definitions
             'jpeg',
             'bmp',
             'png',
+            'webp',
             'gif',
             'ico',
             'css',
@@ -163,7 +170,8 @@ class Definitions
             'md',
             'less',
             'sass',
-            'scss'
+            'scss',
+            'xml'
         ];
     }
 
@@ -179,8 +187,8 @@ class Definitions
             'jpeg',
             'bmp',
             'png',
-            'gif',
-            'svg'
+            'webp',
+            'gif'
         ];
     }
 

@@ -79,7 +79,8 @@
         if (title !== null) {
             if (!$.isArray(title)) {
                 option.textContent = title
-            } else {
+            }
+            else {
                 if (title[1].indexOf('.') !== -1) {
                     option.setAttribute('data-image', title[1])
                 }
@@ -107,10 +108,6 @@
     DropdownEditor.prototype.initCustomSelect = function() {
         var select = this.getSelect()
 
-        if (Modernizr.touch) {
-            return
-        }
-
         var options = {
             dropdownCssClass: 'ocInspectorDropdown'
         }
@@ -121,13 +118,13 @@
 
         options.templateResult = this.formatSelectOption
         options.templateSelection = this.formatSelectOption
-        options.escapeMarkup = function(m) { 
-            return m 
+        options.escapeMarkup = function(m) {
+            return m
         }
 
         $(select).select2(options)
 
-        if (!Modernizr.touch) {
+        if (!Modernizr.touchevents) {
             this.indicatorContainer = $('.select2-container', this.containerCell)
             this.indicatorContainer.addClass('loading-indicator-container size-small')
         }
@@ -136,11 +133,11 @@
     DropdownEditor.prototype.createPlaceholder = function(select) {
         var placeholder = this.propertyDefinition.placeholder
 
-        if (placeholder !== undefined && !Modernizr.touch) {
+        if (placeholder !== undefined && !Modernizr.touchevents) {
             this.createOption(select, null, null)
         }
 
-        if (placeholder !== undefined && Modernizr.touch) {
+        if (placeholder !== undefined && Modernizr.touchevents) {
             this.createOption(select, placeholder, null)
         }
     }
@@ -385,7 +382,7 @@
     }
 
     DropdownEditor.prototype.showLoadingIndicator = function() {
-        if (!Modernizr.touch) {
+        if (!Modernizr.touchevents) {
             this.indicatorContainer.loadIndicator()
         }
     }
@@ -395,7 +392,7 @@
             return
         }
 
-        if (!Modernizr.touch) {
+        if (!Modernizr.touchevents) {
             this.indicatorContainer.loadIndicator('hide')
             this.indicatorContainer.loadIndicator('destroy')
         }

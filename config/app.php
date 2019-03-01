@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'debug' => true,
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'url' => 'https://perevedi-v2.bs2/',
+    'url' => env('APP_URL', 'https://perevedi-v2.bs2/'),
 
     /*
     |--------------------------------------------------------------------------
@@ -81,7 +81,7 @@ return [
     |
     */
 
-    'key' => 'UcnWwZXEsJkstyuerrJiMdFjYDHxM7IC',
+    'key' => env('APP_KEY', ''),
 
     'cipher' => 'AES-256-CBC',
 

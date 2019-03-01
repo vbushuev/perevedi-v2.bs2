@@ -43,7 +43,7 @@ class Parser
 
             $textFilters = [
                 'md' => ['Markdown', 'parse'],
-                'media' => ['Cms\Classes\MediaLibrary', 'url']
+                'media' => ['System\Classes\MediaLibrary', 'url']
             ];
 
             $this->textParser = new TextParser(['filters' => $textFilters]);
@@ -198,7 +198,7 @@ class Parser
             $field = $prefix.'.'.$field;
         }
 
-        $type = isset($params['type']) ? $params['type'] : 'text';
+        $type = $params['type'] ?? 'text';
 
         switch ($type) {
             default:
@@ -218,6 +218,20 @@ class Parser
             case 'checkbox':
                 $result = '{% if ' . $field . ' %}' . $params['_content'] . '{% endif %}';
                 break;
+            case 'datepicker':
+                switch($params['mode']) {
+                    default:
+                    case 'datetime':
+                        $result = '{{ ' . $field . '|date("Y-m-d H:i:s") }}';
+                        break;
+                    case 'date':
+                        $result = '{{ ' . $field . '|date("Y-m-d") }}';
+                        break;
+                    case 'time':
+                        $result = '{{ ' . $field . '|date("H:i:s") }}';
+                        break;
+                }
+                break;
         }
 
         return $result;
@@ -235,7 +249,7 @@ class Parser
             return '';
         }
 
-        $type = isset($params['type']) ? $params['type'] : 'text';
+        $type = $params['type'] ?? 'text';
 
         switch ($type) {
             case 'markdown':

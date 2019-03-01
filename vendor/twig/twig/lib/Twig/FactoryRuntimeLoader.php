@@ -21,7 +21,7 @@ class Twig_FactoryRuntimeLoader implements Twig_RuntimeLoaderInterface
     /**
      * @param array $map An array where keys are class names and values factory callables
      */
-    public function __construct($map = array())
+    public function __construct($map = [])
     {
         $this->map = $map;
     }
@@ -35,3 +35,5 @@ class Twig_FactoryRuntimeLoader implements Twig_RuntimeLoaderInterface
         }
     }
 }
+
+class_alias('Twig_FactoryRuntimeLoader', 'Twig\RuntimeLoader\FactoryRuntimeLoader', false);

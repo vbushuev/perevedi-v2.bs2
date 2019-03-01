@@ -23,7 +23,7 @@ class Throttle extends Model
      * @var array Relations
      */
     public $belongsTo = [
-        'user' => ['October\Rain\Auth\User', 'key' => 'user_id']
+        'user' => [User::class, 'key' => 'user_id']
     ];
 
     /**
@@ -221,9 +221,7 @@ class Throttle extends Model
             $this->save();
         }
 
-        unset($lastAttempt);
-        unset($clearAttemptsAt);
-        unset($now);
+        unset($lastAttempt, $clearAttemptsAt, $now);
     }
 
     /**
@@ -245,9 +243,7 @@ class Throttle extends Model
             $this->unsuspend();
         }
 
-        unset($suspended);
-        unset($unsuspendAt);
-        unset($now);
+        unset($suspended, $unsuspendAt, $now);
     }
 
     /**

@@ -20,10 +20,9 @@ trait MorphOneOrMany
         if ($sessionKey === null) {
             return parent::save($model);
         }
-        else {
-            $this->add($model, $sessionKey);
-            return $model->save() ? $model : false;
-        }
+
+        $this->add($model, $sessionKey);
+        return $model->save() ? $model : false;
     }
 
     /**
@@ -45,8 +44,8 @@ trait MorphOneOrMany
     public function add(Model $model, $sessionKey = null)
     {
         if ($sessionKey === null) {
-            $model->setAttribute($this->getPlainForeignKey(), $this->getParentKey());
-            $model->setAttribute($this->getPlainMorphType(), $this->morphClass);
+            $model->setAttribute($this->getForeignKeyName(), $this->getParentKey());
+            $model->setAttribute($this->getMorphType(), $this->morphClass);
             $model->save();
 
             /*
@@ -80,8 +79,8 @@ trait MorphOneOrMany
                 /*
                  * Make this model an orphan ;~(
                  */
-                $model->setAttribute($this->getPlainForeignKey(), null);
-                $model->setAttribute($this->getPlainMorphType(), null);
+                $model->setAttribute($this->getForeignKeyName(), null);
+                $model->setAttribute($this->getMorphType(), null);
                 $model->save();
             }
 

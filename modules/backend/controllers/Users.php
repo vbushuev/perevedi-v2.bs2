@@ -1,6 +1,9 @@
 <?php namespace Backend\Controllers;
 
+use Lang;
+use Flash;
 use Backend;
+use Redirect;
 use BackendMenu;
 use BackendAuth;
 use Backend\Models\UserGroup;
@@ -16,18 +19,37 @@ use System\Classes\SettingsManager;
  */
 class Users extends Controller
 {
+    /**
+     * @var array Extensions implemented by this controller.
+     */
     public $implement = [
-        'Backend.Behaviors.FormController',
-        'Backend.Behaviors.ListController'
+        \Backend\Behaviors\FormController::class,
+        \Backend\Behaviors\ListController::class
     ];
 
+    /**
+     * @var array `FormController` configuration.
+     */
     public $formConfig = 'config_form.yaml';
+
+    /**
+     * @var array `ListController` configuration.
+     */
     public $listConfig = 'config_list.yaml';
 
+    /**
+     * @var array Permissions required to view this page.
+     */
     public $requiredPermissions = ['backend.manage_users'];
 
+    /**
+     * @var string HTML body tag class
+     */
     public $bodyClass = 'compact-container';
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -41,6 +63,49 @@ class Users extends Controller
     }
 
     /**
+     * Extends the list query to hide superusers if the current user is not a superuser themselves
+     */
+    public function listExtendQuery($query)
+    {
+        if (!$this->user->isSuperUser()) {
+            $query->where('is_superuser', false);
+        }
+    }
+
+    /**
+     * Prevents non-superusers from even seeing the is_superuser filter
+     */
+    public function listFilterExtendScopes($filterWidget)
+    {
+        if (!$this->user->isSuperUser()) {
+            $filterWidget->removeScope('is_superuser');
+        }
+    }
+
+    /**
+     * Strike out deleted records
+     */
+    public function listInjectRowClass($record, $definition = null)
+    {
+        if ($record->trashed()) {
+            return 'strike';
+        }
+    }
+
+    /**
+     * Extends the form query to prevent non-superusers from accessing superusers at all
+     */
+    public function formExtendQuery($query)
+    {
+        if (!$this->user->isSuperUser()) {
+            $query->where('is_superuser', false);
+        }
+
+        // Ensure soft-deleted records can still be managed
+        $query->withTrashed();
+    }
+
+    /**
      * Update controller
      */
     public function update($recordId, $context = null)
@@ -51,6 +116,18 @@ class Users extends Controller
         }
 
         return $this->asExtension('FormController')->update($recordId, $context);
+    }
+
+    /**
+     * Handle restoring users
+     */
+    public function update_onRestore($recordId)
+    {
+        $this->formFindModelObject($recordId)->restore();
+
+        Flash::success(Lang::get('backend::lang.form.restore_success', ['name' => Lang::get('backend::lang.user.name')]));
+
+        return Redirect::refresh();
     }
 
     /**

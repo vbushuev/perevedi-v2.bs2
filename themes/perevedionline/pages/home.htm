@@ -53,6 +53,7 @@ function onCheckbin(){
 }
 function best2paySignature(&$data,$config=["password"=>"test"]){
     $str ="";
+    $data["sector"] = isset($config["sector"])?$config["sector"]:1;
     foreach($data as $k=>$v) $str.=$v;
     $str.=isset($config["password"])?$config["password"]:"test";
     $md5 = md5($str);
@@ -60,34 +61,115 @@ function best2paySignature(&$data,$config=["password"=>"test"]){
     $data["signature"] = $ret;
 }
 function onRequest(){
-    $config = [
-        "endpoint"=>"https://test.best2pay.net/webapi/P2PTransfer"
-        "sector"=>1,
-        "password"=>'test'
-    ];
-    $panto = preg_replace('/[^\d]+/','',$_POST["panto"]);
-    $amount = floatval($_POST["amount"])*100;
-    $lang = $_POST["lang"];
-    $host = "https://".$_SERVER["SERVER_NAME"];
-    $rq = Transaction::register([
-        "amount"=>$_POST["amount"],
-        "currency"=>$_POST["currencyfrom"],
-        "client_ip"=>$_SERVER["REMOTE_ADDR"],
-        "status"=>"0",
-        "fee" => $_POST["fee"]
-    ]);
-    $data = [
-        "amount"=>$amount,
-        "reference"=>$rq->id,
-        "card2"=>$panto,
-        "url"=>$host."/form/?panto=".$panto."&lang=".$lang,
-        "failurl"=>$host."/wait/?panto=".$panto."&lang=".$lang
-    ];
-    best2paySignature($data,$config);
-    $rq->update(["status"=>"1"]);
-    $this["redirect"] = $config["endpoint"]."?".http_build_query($data);
-    $this["success"]=true;
-    <!-- return $retval; -->
+    $cfg = Config::payment();
+    $ptype = isset($cfg['provider'])?$cfg['provider']:'payneteasy';
+    if($ptype == 'best2pay'){
+        $b2p = Config::$ptype();
+        $env = $b2p["env"] ;
+        $config = $b2p[$env];
+
+        $panto = preg_replace('/[^\d]+/','',$_POST["panto"]);
+        $amount = floatval($_POST["amount"])*100;
+        $lang = $_POST["lang"];
+        $host = "https://".$_SERVER["SERVER_NAME"];
+        $rq = Transaction::register([
+            "amount"=>$_POST["amount"],
+            "currency"=>$_POST["currencyfrom"],
+            "client_ip"=>$_SERVER["REMOTE_ADDR"],
+            "status"=>"0",
+            "fee" => $_POST["fee"]
+        ]);
+        $data = [
+            "amount"=>$amount,
+            "reference"=>$rq->id,
+            "card2"=>$panto,
+            "url"=>$host."/form/?panto=".$panto."&lang=".$lang,
+            "failurl"=>$host."/wait/?panto=".$panto."&lang=".$lang
+        ];
+        self::best2paySignature($data,$config);
+        $rq->update(["status"=>"1"]);
+        $this["redirect"] = $config["endpoint"]."?".http_build_query($data);
+        $this["success"]=true;
+        return ;
+    }
+    else{
+        $pne = Config::payneteasy();
+        $aquere = $pne["env"];
+        $operation = $pne["operation"];
+        $direction = $_POST["direction"];
+        $panto = preg_replace('/[^\d]+/','',$_POST["panto"]);
+        $lang = $_POST["lang"];
+
+        $host = "https://".$_SERVER["SERVER_NAME"];
+        $rq = Transaction::register([
+            "amount"=>$_POST["amount"],
+            "currency"=>$_POST["currencyfrom"],
+            "client_ip"=>$_SERVER["REMOTE_ADDR"],
+            "status"=>"0",
+            "fee" => $_POST["fee"]
+        ]);
+
+        if ($_SERVER["SERVER_NAME"] == 'localhost') {
+            $host = "https://perevedi.online";
+            $redirect_url = "http://localhost:8000/response";
+            $server_callback_url = "https://perevedi.online/callback";
+        }
+        else {
+            $host = "https://perevedi.online";
+            $redirect_url = "https://perevedi.online/response";
+            $server_callback_url = "https://perevedi.online/callback";
+        }
+
+        // $ssn = "1490";//10001100 - 10001492
+        $saleData = [
+            "data"=>[
+                "client_orderid" => $rq->id,
+                "order_desc" => "&panto=".$panto."&lang=".$lang,
+                "first_name" => "Perevedi",
+                "last_name" => "Online",
+                "birthday" => "",
+                "address1" => "Marshala Novikova str., 1",
+                "address2" => "office 1307",
+                "city" => "Moscow",
+                "state" => "",//isset($data["state"])?$data["state"]:"",
+                "zip_code" => "123098",
+                "country" => "RU",
+                "phone" => "+79265766710",
+                "cell_phone" => "+79265766710",
+                "amount" => $rq->amount,
+                "currency" => $rq->currency,
+                "email" => "vsb@garan24.ru",
+                //"ssn" => $ssn,
+                "ipaddress" => $rq->client_ip,
+                "site_url" => $host,
+                "redirect_url" => $redirect_url,
+                "server_callback_url" =>  $server_callback_url,
+                //"merchant_data" => "VIP customer"
+            ]
+        ];
+        if($direction=='crossboard')$saleData["data"]["ssn"] = "10001".rand(200,492);
+        $saleData = array_merge($pne[$aquere][$direction][$operation],$saleData);
+        // print_r($saleData);exit;
+        $request = new \Garan24\Gateway\Ariuspay\PreauthRequest($saleData);
+        switch($operation){
+            case "CaptureRequest":$request = new \Garan24\Gateway\Ariuspay\CaptureRequest($saleData);break;
+            case "SaleRequest":$request = new \Garan24\Gateway\Ariuspay\SaleRequest($saleData);break;
+            case "TransferRequest":$request = new \Garan24\Gateway\Ariuspay\TransferRequest($saleData);break;
+        }
+        $connector = new \Garan24\Gateway\Ariuspay\Connector();
+        $connector->setRequest($request);
+        $connector->call();
+        $resp = $connector->getResponse();
+        $respArr = $resp->toArray();
+        $rq->update(["status"=>"1","order_id"=>$respArr["paynet-order-id"]]);
+        $retval = $resp->toArray();
+        if(!isset($retval["error-code"]))$this["success"]=true;
+        $this["redirect"] = isset($retval["redirect-url"])?$retval["redirect-url"]."?panto=".$panto."&lang=".$lang:false;
+        //$this["redirect"] = "https://perevedi-v2.bs2/form/?panto=".$panto."&lang=".$lang;
+        //$this["redirect"] = "https://perevedi-v2.bs2/wait/?panto=".$panto."&lang=".$lang;
+        return $retval;
+    }
+
 }
 ==
 <div class="two-block_wrapper">

@@ -1,0 +1,15 @@
+db.host = 127.0.0.1
+db.user = perevedi
+db.pass = perevedi
+db.schema = perevedi
+db.prefix =
+
+payment.provider = best2pay
+
+best2pay.env = test
+best2pay.test.endpoint = https://test.best2pay.net/webapi/P2PTransfer
+best2pay.test.sector = 1
+best2pay.test.password = test
+best2pay.prod.endpoint = https://test.best2pay.net/webapi/P2PTransfer
+best2pay.prod.sector = 1
+best2pay.prod.password = test

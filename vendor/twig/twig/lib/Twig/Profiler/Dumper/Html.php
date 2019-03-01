@@ -11,17 +11,15 @@
 
 /**
  * @author Fabien Potencier <fabien@symfony.com>
- *
- * @final
  */
-class Twig_Profiler_Dumper_Html extends Twig_Profiler_Dumper_Text
+final class Twig_Profiler_Dumper_Html extends Twig_Profiler_Dumper_Base
 {
-    private static $colors = array(
+    private static $colors = [
         'block' => '#dfd',
         'macro' => '#ddf',
         'template' => '#ffd',
         'big' => '#d44',
-    );
+    ];
 
     public function dump(Twig_Profiler_Profile $profile)
     {
@@ -43,3 +41,5 @@ class Twig_Profiler_Dumper_Html extends Twig_Profiler_Dumper_Text
         return sprintf('<span style="color: %s">%.2fms/%.0f%%</span>', $percent > 20 ? self::$colors['big'] : 'auto', $profile->getDuration() * 1000, $percent);
     }
 }
+
+class_alias('Twig_Profiler_Dumper_Html', 'Twig\Profiler\Dumper\HtmlDumper', false);

@@ -19,10 +19,9 @@ trait HasOneOrMany
         if ($sessionKey === null) {
             return parent::save($model);
         }
-        else {
-            $this->add($model, $sessionKey);
-            return $model->save() ? $model : false;
-        }
+
+        $this->add($model, $sessionKey);
+        return $model->save() ? $model : false;
     }
 
     /**
@@ -57,7 +56,7 @@ trait HasOneOrMany
     public function add(Model $model, $sessionKey = null)
     {
         if ($sessionKey === null) {
-            $model->setAttribute($this->getPlainForeignKey(), $this->getParentKey());
+            $model->setAttribute($this->getForeignKeyName(), $this->getParentKey());
             $model->save();
 
             /*
@@ -93,7 +92,7 @@ trait HasOneOrMany
     public function remove(Model $model, $sessionKey = null)
     {
         if ($sessionKey === null) {
-            $model->setAttribute($this->getPlainForeignKey(), null);
+            $model->setAttribute($this->getForeignKeyName(), null);
             $model->save();
 
             /*
@@ -109,6 +108,15 @@ trait HasOneOrMany
         else {
             $this->parent->unbindDeferred($this->relationName, $model, $sessionKey);
         }
+    }
+
+    /**
+     * Get the foreign key for the relationship.
+     * @return string
+     */
+    public function getForeignKey()
+    {
+        return $this->foreignKey;
     }
 
     /**

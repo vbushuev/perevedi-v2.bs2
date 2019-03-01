@@ -1,7 +1,5 @@
 <?php namespace Backend\Classes;
 
-use App;
-use Str;
 use Lang;
 use View;
 use Flash;
@@ -15,8 +13,7 @@ use Exception;
 use BackendAuth;
 use Backend\Models\UserPreference;
 use Backend\Models\Preference as BackendPreference;
-use Cms\Widgets\MediaManager;
-use System\Classes\ErrorHandler;
+use Backend\Widgets\MediaManager;
 use October\Rain\Exception\AjaxException;
 use October\Rain\Exception\SystemException;
 use October\Rain\Exception\ValidationException;
@@ -38,12 +35,8 @@ class Controller extends Extendable
     use \System\Traits\AssetMaker;
     use \System\Traits\ConfigMaker;
     use \System\Traits\EventEmitter;
+    use \Backend\Traits\ErrorMaker;
     use \Backend\Traits\WidgetMaker;
-
-    /**
-     * @var string Object used for storing a fatal error.
-     */
-    protected $fatalError;
 
     /**
      * @var object Reference the logged in admin user.
@@ -158,11 +151,7 @@ class Controller extends Extendable
         /*
          * Media Manager widget is available on all back-end pages
          */
-        if (
-            class_exists('Cms\Widgets\MediaManager') &&
-            $this->user &&
-            $this->user->hasAccess('media.*')
-        ) {
+        if ($this->user && $this->user->hasAccess('media.*')) {
             $manager = new MediaManager($this, 'ocmediamanager');
             $manager->bindToController();
         }
@@ -194,13 +183,6 @@ class Controller extends Extendable
         }
 
         /*
-         * Extensibility
-         */
-        if ($event = $this->fireSystemEvent('backend.page.beforeDisplay', [$action, $params])) {
-            return $event;
-        }
-
-        /*
          * Determine if this request is a public action.
          */
         $isPublicAction = in_array($action, $this->publicActions);
@@ -225,6 +207,13 @@ class Controller extends Extendable
             if ($this->requiredPermissions && !$this->user->hasAnyAccess($this->requiredPermissions)) {
                 return Response::make(View::make('backend::access_denied'), 403);
             }
+        }
+
+        /*
+         * Extensibility
+         */
+        if ($event = $this->fireSystemEvent('backend.page.beforeDisplay', [$action, $params])) {
+            return $event;
         }
 
         /*
@@ -350,11 +339,15 @@ class Controller extends Extendable
         $result = null;
 
         if (!$this->actionExists($actionName)) {
-            throw new SystemException(sprintf(
-                "Action %s is not found in the controller %s",
-                $actionName,
-                get_class($this)
-            ));
+            if (Config::get('app.debug', false)) {
+                throw new SystemException(sprintf(
+                    "Action %s is not found in the controller %s",
+                    $actionName,
+                    get_class($this)
+                ));
+            } else {
+                Response::make(View::make('backend::404'), 404);
+            }
         }
 
         // Execute the action
@@ -371,7 +364,7 @@ class Controller extends Extendable
         }
 
         // Load the view
-        if (!$this->suppressView && is_null($result)) {
+        if (!$this->suppressView && $result === null) {
             return $this->makeView($actionName);
         }
 
@@ -401,14 +394,13 @@ class Controller extends Extendable
      */
     protected function execAjaxHandlers()
     {
-
         if ($handler = $this->getAjaxHandler()) {
             try {
                 /*
                  * Validate the handler name
                  */
                 if (!preg_match('/^(?:\w+\:{2})?on[A-Z]{1}[\w+]*$/', $handler)) {
-                    throw new SystemException(Lang::get('cms::lang.ajax_handler.invalid_name', ['name'=>$handler]));
+                    throw new SystemException(Lang::get('backend::lang.ajax_handler.invalid_name', ['name'=>$handler]));
                 }
 
                 /*
@@ -416,6 +408,12 @@ class Controller extends Extendable
                  */
                 if ($partialList = trim(Request::header('X_OCTOBER_REQUEST_PARTIALS'))) {
                     $partialList = explode('&', $partialList);
+
+                    foreach ($partialList as $partial) {
+                        if (!preg_match('/^(?!.*\/\/)[a-z0-9\_][a-z0-9\_\-\/]*$/i', $partial)) {
+                            throw new SystemException(Lang::get('backend::lang.partial.invalid_name', ['name'=>$partial]));
+                        }
+                    }
                 }
                 else {
                     $partialList = [];
@@ -427,7 +425,7 @@ class Controller extends Extendable
                  * Execute the handler
                  */
                 if (!$result = $this->runAjaxHandler($handler)) {
-                    throw new ApplicationException(Lang::get('cms::lang.ajax_handler.not_found', ['name'=>$handler]));
+                    throw new ApplicationException(Lang::get('backend::lang.ajax_handler.not_found', ['name'=>$handler]));
                 }
 
                 /*
@@ -504,6 +502,39 @@ class Controller extends Extendable
      */
     protected function runAjaxHandler($handler)
     {
+        /**
+         * @event backend.ajax.beforeRunHandler
+         * Provides an opportunity to modify an AJAX request
+         *
+         * The parameter provided is `$handler` (the requested AJAX handler to be run)
+         *
+         * Example usage (forwards AJAX handlers to a backend widget):
+         *
+         *     Event::listen('backend.ajax.beforeRunHandler', function((\Backend\Classes\Controller) $controller, (string) $handler) {
+         *         if (strpos($handler, '::')) {
+         *             list($componentAlias, $handlerName) = explode('::', $handler);
+         *             if ($componentAlias === $this->getBackendWidgetAlias()) {
+         *                 return $this->backendControllerProxy->runAjaxHandler($handler);
+         *             }
+         *         }
+         *     });
+         *
+         * Or
+         *
+         *     $this->controller->bindEvent('ajax.beforeRunHandler', function ((string) $handler) {
+         *         if (strpos($handler, '::')) {
+         *             list($componentAlias, $handlerName) = explode('::', $handler);
+         *             if ($componentAlias === $this->getBackendWidgetAlias()) {
+         *                 return $this->backendControllerProxy->runAjaxHandler($handler);
+         *             }
+         *         }
+         *     });
+         *
+         */
+        if ($event = $this->fireSystemEvent('backend.ajax.beforeRunHandler', [$handler])) {
+            return $event;
+        }
+
         /*
          * Process Widget handler
          */
@@ -525,7 +556,7 @@ class Controller extends Extendable
 
             if (($widget = $this->widget->{$widgetName}) && $widget->methodExists($handlerName)) {
                 $result = $this->runAjaxHandlerForWidget($widget, $handlerName);
-                return ($result) ?: true;
+                return $result ?: true;
             }
         }
         else {
@@ -536,7 +567,7 @@ class Controller extends Extendable
 
             if ($this->methodExists($pageHandler)) {
                 $result = call_user_func_array([$this, $pageHandler], $this->params);
-                return ($result) ?: true;
+                return $result ?: true;
             }
 
             /*
@@ -544,7 +575,7 @@ class Controller extends Extendable
              */
             if ($this->methodExists($handler)) {
                 $result = call_user_func_array([$this, $handler], $this->params);
-                return ($result) ?: true;
+                return $result ?: true;
             }
 
             /*
@@ -556,9 +587,16 @@ class Controller extends Extendable
             foreach ((array) $this->widget as $widget) {
                 if ($widget->methodExists($handler)) {
                     $result = $this->runAjaxHandlerForWidget($widget, $handler);
-                    return ($result) ?: true;
+                    return $result ?: true;
                 }
             }
+        }
+
+        /*
+         * Generic handler that does nothing
+         */
+        if ($handler == 'onAjax') {
+            return true;
         }
 
         return false;
@@ -609,16 +647,6 @@ class Controller extends Extendable
     {
         $this->statusCode = (int) $code;
         return $this;
-    }
-
-    /**
-     * Sets standard page variables in the case of a controller error.
-     */
-    public function handleError($exception)
-    {
-        $errorMessage = ErrorHandler::getDetailedMessage($exception);
-        $this->fatalError = $errorMessage;
-        $this->vars['fatalError'] = $errorMessage;
     }
 
     //
@@ -704,8 +732,12 @@ class Controller extends Extendable
 
         $token = Request::input('_token') ?: Request::header('X-CSRF-TOKEN');
 
-        return Str::equals(
-            Session::getToken(),
+        if (!strlen($token)) {
+            return false;
+        }
+
+        return hash_equals(
+            Session::token(),
             $token
         );
     }

@@ -332,6 +332,24 @@ ESC;
         $this->assertEquals(['about.htm', 'home.htm'], $files);
     }
 
+    public function testAddDynamicPoperty()
+    {
+        @unlink($targetFile = __DIR__.'/../fixtures/halcyon/themes/theme1/pages/dynamicproperty.htm');
+
+        $page = HalcyonTestPage::create([
+            'fileName' => 'dynamicproperty',
+            'title' => 'Add Dynamic Property',
+            'markup' => '<p>Foo bar!</p>'
+        ]);
+
+        $page->addDynamicProperty('myDynamicProperty', 'myDynamicPropertyValue');
+        $page->save();
+        $page = HalcyonTestPage::find('dynamicproperty');
+        $this->assertNotNull($page);
+        $this->assertArrayNotHasKey('myDynamicProperty', $page->attributes);
+        @unlink($targetFile);
+    }
+
     //
     // House keeping
     //
@@ -350,7 +368,7 @@ ESC;
 
     protected function setValidatorOnModel()
     {
-        $translator = $this->getMockBuilder('Symfony\Component\Translation\TranslatorInterface')->setMethods([
+        $translator = $this->getMockBuilder('Illuminate\Contracts\Translation\Translator')->setMethods([
             'get',
             'trans',
             'transChoice',

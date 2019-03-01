@@ -6,7 +6,6 @@ use Illuminate\Contracts\Foundation\Application;
 
 class LoadTranslation
 {
-
     /**
      * Bootstrap the translator.
      *
@@ -15,7 +14,6 @@ class LoadTranslation
      */
     public function bootstrap(Application $app)
     {
-
         $app->singleton('translation.loader', function($app) {
             return new FileLoader($app['files'], $app['path.lang']);
         });
@@ -29,12 +27,10 @@ class LoadTranslation
             $locale = $app['config']['app.locale'];
 
             $trans = new Translator($loader, $locale);
-
+            $trans->setEventDispatcher($app['events']);
             $trans->setFallback($app['config']['app.fallback_locale']);
 
             return $trans;
         });
-
     }
-
 }

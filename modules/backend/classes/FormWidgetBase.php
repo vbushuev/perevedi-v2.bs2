@@ -51,6 +51,11 @@ abstract class FormWidgetBase extends WidgetBase
     protected $formField;
 
     /**
+     * @var Backend\Widgets\Form The parent form that contains this field
+     */
+    protected $parentForm = null;
+
+    /**
      * @var string Form field name.
      */
     protected $fieldName;
@@ -79,10 +84,21 @@ abstract class FormWidgetBase extends WidgetBase
             'data',
             'sessionKey',
             'previewMode',
-            'showLabels'
+            'showLabels',
+            'parentForm',
         ]);
 
         parent::__construct($controller, $configuration);
+    }
+
+    /**
+     * Retrieve the parent form for this formwidget
+     *
+     * @return Backend\Widgets\Form|null
+     */
+    public function getParentForm()
+    {
+        return $this->parentForm;
     }
 
     /**
@@ -123,6 +139,10 @@ abstract class FormWidgetBase extends WidgetBase
      */
     public function getLoadValue()
     {
+        if ($this->formField->value !== null) {
+            return $this->formField->value;
+        }
+
         $defaultValue = !$this->model->exists
             ? $this->formField->getDefaultFromData($this->data ?: $this->model)
             : null;

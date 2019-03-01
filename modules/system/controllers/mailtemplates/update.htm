@@ -14,7 +14,7 @@
                 <div data-control="toolbar">
                     <div class="scoreboard-item title-value">
                         <h4><?= e(trans('system::lang.mail_templates.template')) ?></h4>
-                        <p><?= $formModel->code ?></p>
+                        <p><?= e($formModel->code) ?></p>
                     </div>
                 </div>
             </div>
@@ -24,7 +24,7 @@
             <?= $this->formRender() ?>
         </div>
 
-        <div class="form-buttons">
+        <div class="form-buttons p-t">
             <div class="loading-indicator-container">
                 <button
                     type="submit"

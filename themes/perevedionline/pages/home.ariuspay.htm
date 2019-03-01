@@ -87,6 +87,18 @@ function onRequest(){
         "status"=>"0",
         "fee" => $_POST["fee"]
     ]);
+
+    if ($_SERVER["SERVER_NAME"] == 'localhost') {
+        $host = "https://perevedi.online";
+        $redirect_url = "http://localhost:8000/response";
+        $server_callback_url = "https://perevedi.online/callback";
+    }
+    else {
+        $host = "https://perevedi.online";
+        $redirect_url = "https://perevedi.online/response";
+        $server_callback_url = "https://perevedi.online/callback";
+    }
+
     // $ssn = "1490";//10001100 - 10001492
     $saleData = [
         "data"=>[
@@ -109,8 +121,8 @@ function onRequest(){
             //"ssn" => $ssn,
             "ipaddress" => $rq->client_ip,
             "site_url" => $host,
-            "redirect_url" => $host."/response",
-            "server_callback_url" =>  $host."/callback",
+            "redirect_url" => $redirect_url,
+            "server_callback_url" =>  $server_callback_url,
             //"merchant_data" => "VIP customer"
         ]
     ];

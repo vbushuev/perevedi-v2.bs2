@@ -1,8 +1,8 @@
 <?php namespace October\Rain\Database\Traits;
 
+use App;
 use Lang;
 use Input;
-use App;
 use October\Rain\Database\ModelException;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Validator;
@@ -41,6 +41,11 @@ trait Validation
     protected $validationErrors;
 
     /**
+     * @var array Default custom attribute names.
+     */
+    protected $validationDefaultAttrNames = [];
+
+    /**
      * Boot the validation trait for this model.
      *
      * @return void
@@ -77,12 +82,48 @@ trait Validation
     }
 
     /**
+     * Programatically sets multiple validation attribute names.
+     * @param array $attributeNames
+     * @return void
+     */
+    public function setValidationAttributeNames($attributeNames)
+    {
+        $this->validationDefaultAttrNames = $attributeNames;
+    }
+
+    /**
+     * Programatically sets the validation attribute names, will take lower priority
+     * to model defined attribute names found in `$attributeNames`.
+     * @param string $attr
+     * @param string $name
+     * @return void
+     */
+    public function setValidationAttributeName($attr, $name)
+    {
+        $this->validationDefaultAttrNames[$attr] = $name;
+    }
+
+    /**
      * Returns the model data used for validation.
      * @return array
      */
     protected function getValidationAttributes()
     {
         return $this->getAttributes();
+    }
+
+    /**
+     * Attachments validate differently to their simple values.
+     */
+    protected function getRelationValidationValue($relationName)
+    {
+        $relationType = $this->getRelationType($relationName);
+
+        if ($relationType === 'attachOne' || $relationType === 'attachMany') {
+            return $this->$relationName()->getValidationValue();
+        }
+
+        return $this->getRelationValue($relationName);
     }
 
     /**
@@ -128,13 +169,24 @@ trait Validation
             ? $this->throwOnValidation
             : true;
 
-        if (($this->fireModelEvent('validating') === false) || ($this->fireEvent('model.beforeValidate') === false)) {
+        /**
+         * @event model.beforeValidate
+         * Called before the model is validated
+         *
+         * Example usage:
+         *
+         *     $model->bindEvent('model.beforeValidate', function () use (\October\Rain\Database\Model $model) {
+         *         // Prevent anything from validating ever!
+         *         return false;
+         *     });
+         *
+         */
+        if (($this->fireModelEvent('validating') === false) || ($this->fireEvent('model.beforeValidate', [], true) === false)) {
             if ($throwOnValidation) {
                 throw new ModelException($this);
             }
-            else {
-                return false;
-            }
+
+            return false;
         }
 
         if ($this->methodExists('beforeValidate')) {
@@ -144,7 +196,7 @@ trait Validation
         /*
          * Perform validation
          */
-        $rules = (is_null($rules)) ? $this->rules : $rules;
+        $rules = is_null($rules) ? $this->rules : $rules;
         $rules = $this->processValidationRules($rules);
         $success = true;
 
@@ -163,9 +215,14 @@ trait Validation
              * Add relation values, if specified.
              */
             foreach ($rules as $attribute => $rule) {
-                if (!$this->hasRelation($attribute)) continue;
-                if (array_key_exists($attribute, $data)) continue;
-                $data[$attribute] = $this->getRelationValue($attribute);
+                if (
+                    !$this->hasRelation($attribute) ||
+                    array_key_exists($attribute, $data)
+                ) {
+                    continue;
+                }
+
+                $data[$attribute] = $this->getRelationValidationValue($attribute);
             }
 
             /*
@@ -215,6 +272,8 @@ trait Validation
                 $attributeNames = [];
             }
 
+            $attributeNames = array_merge($this->validationDefaultAttrNames, $attributeNames);
+
             if (property_exists($this, 'attributeNames')) {
                 $attributeNames = array_merge($this->attributeNames, $attributeNames);
             }
@@ -253,10 +312,23 @@ trait Validation
             }
             else {
                 $this->validationErrors = $validator->messages();
-                if (Input::hasSession()) Input::flash();
+                if (Input::hasSession()) {
+                    Input::flash();
+                }
             }
         }
 
+        /**
+         * @event model.afterValidate
+         * Called after the model is validated
+         *
+         * Example usage:
+         *
+         *     $model->bindEvent('model.afterValidate', function () use (\October\Rain\Database\Model $model) {
+         *         \Log::info("{$model->name} successfully passed validation");
+         *     });
+         *
+         */
         $this->fireModelEvent('validated', false);
         $this->fireEvent('model.afterValidate');
 
@@ -416,5 +488,4 @@ trait Validation
     {
         static::registerModelEvent('validated', $callback);
     }
-
 }

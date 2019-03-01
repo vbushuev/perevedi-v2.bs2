@@ -50,6 +50,7 @@ class FieldParser
         'dropdown',
         'radio',
         'checkbox',
+        'datepicker',
         'repeater',
         'variable'
     ];
@@ -79,8 +80,8 @@ class FieldParser
 
         // Process registered tags
         list($tags, $fields) = $this->processTags($template);
-        $this->tags = $this->tags + $tags;
-        $this->fields = $this->fields + $fields;
+        $this->tags += $tags;
+        $this->fields += $fields;
 
         /*
          * Layer the repeater tags over the standard ones to retain 
@@ -122,9 +123,7 @@ class FieldParser
      */
     public function getFieldTags($field)
     {
-        return isset($this->tags[$field])
-            ? $this->tags[$field]
-            : [];
+        return $this->tags[$field] ?? [];
     }
 
     /**
@@ -143,9 +142,7 @@ class FieldParser
      */
     public function getFieldParams($field)
     {
-        return isset($this->fields[$field])
-            ? $this->fields[$field]
-            : [];
+        return $this->fields[$field] ?? [];
     }
 
     /**
@@ -167,7 +164,7 @@ class FieldParser
                 $defaults[$field][] = $this->getDefaultParams(array_get($params, 'fields', []));
             }
             else {
-                $defaults[$field] = isset($params['default']) ? $params['default'] : null;
+                $defaults[$field] = $params['default'] ?? null;
             }
         }
 
@@ -290,6 +287,14 @@ class FieldParser
         $result = $this->processParamsRegex($paramString);
         $paramNames = $result[1];
         $paramValues = $result[2];
+
+        // Convert all 'true' and 'false' string values to boolean values
+        foreach ($paramValues as $key => $value) {
+            if ($value === 'true' || $value === 'false') {
+                $paramValues[$key] = $value === 'true';
+            }
+        }
+
         $params = array_combine($paramNames, $paramValues);
 
         if ($tagName == 'checkbox') {

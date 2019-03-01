@@ -35,6 +35,13 @@ columns:
         select: name
         sortable: false
 
+    role:
+        label: backend::lang.user.role.name
+        relation: role
+        select: name
+        sortable: true
+        searchable: true
+
     last_login:
         label: backend::lang.user.last_login
         searchable: true
@@ -48,6 +55,12 @@ columns:
 
     updated_at:
         label: backend::lang.user.updated_at
+        searchable: true
+        invisible: true
+        type: datetime
+
+    deleted_at:
+        label: backend::lang.user.deleted_at
         searchable: true
         invisible: true
         type: datetime

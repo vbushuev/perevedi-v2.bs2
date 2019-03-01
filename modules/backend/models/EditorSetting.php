@@ -17,13 +17,27 @@ class EditorSetting extends Model
     use \System\Traits\ViewMaker;
     use \October\Rain\Database\Traits\Validation;
 
-    public $implement = ['System.Behaviors.SettingsModel'];
+    /**
+     * @var array Behaviors implemented by this model.
+     */
+    public $implement = [
+        \System\Behaviors\SettingsModel::class
+    ];
 
+    /**
+     * @var string Unique code
+     */
     public $settingsCode = 'backend_editor_settings';
 
+    /**
+     * @var mixed Settings form field defitions
+     */
     public $settingsFields = 'fields.yaml';
-
-    const CACHE_KEY = 'backend::editor.custom_css';
+    
+    /**
+     * @var string The key to store rendered CSS in the cache under
+     */
+    public $cacheKey = 'backend::editor.custom_css';
 
     protected $defaultHtmlAllowEmptyTags = 'textarea, a, iframe, object, video, style, script';
 
@@ -32,6 +46,8 @@ class EditorSetting extends Model
     protected $defaultHtmlNoWrapTags = 'figure, script, style';
 
     protected $defaultHtmlRemoveTags = 'script, style';
+
+    protected $defaultHtmlLineBreakerTags = 'figure, table, hr, iframe, form, dl';
 
     protected $defaultHtmlStyleImage = [
         'oc-img-rounded' => 'Rounded',
@@ -51,8 +67,8 @@ class EditorSetting extends Model
     ];
 
     protected $defaultHtmlStyleTable = [
-        'oc-table-dashed-borders' => 'Dashed Borders',
-        'oc-table-alternate-rows' => 'Alternate Rows',
+        'oc-dashed-borders' => 'Dashed Borders',
+        'oc-alternate-rows' => 'Alternate Rows',
     ];
 
     protected $defaultHtmlStyleTableCell = [
@@ -65,12 +81,18 @@ class EditorSetting extends Model
      */
     public $rules = [];
 
+    /**
+     * Initialize the seed data for this model. This only executes when the
+     * model is first created or reset to default.
+     * @return void
+     */
     public function initSettingsData()
     {
         $this->html_allow_empty_tags = $this->defaultHtmlAllowEmptyTags;
         $this->html_allow_tags = $this->defaultHtmlAllowTags;
         $this->html_no_wrap_tags = $this->defaultHtmlNoWrapTags;
         $this->html_remove_tags = $this->defaultHtmlRemoveTags;
+        $this->html_line_breaker_tags = $this->defaultHtmlLineBreakerTags;
         $this->html_custom_styles = File::get(base_path().'/modules/backend/models/editorsetting/default_styles.less');
         $this->html_style_image = $this->makeStylesForTable($this->defaultHtmlStyleImage);
         $this->html_style_link = $this->makeStylesForTable($this->defaultHtmlStyleLink);
@@ -81,7 +103,7 @@ class EditorSetting extends Model
 
     public function afterSave()
     {
-        Cache::forget(self::CACHE_KEY);
+        Cache::forget(self::instance()->cacheKey);
     }
 
     protected function makeStylesForTable($arr)
@@ -138,13 +160,14 @@ class EditorSetting extends Model
 
     public static function renderCss()
     {
-        if (Cache::has(self::CACHE_KEY)) {
-            return Cache::get(self::CACHE_KEY);
+        $cacheKey = self::instance()->cacheKey;
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
         }
 
         try {
             $customCss = self::compileCss();
-            Cache::forever(self::CACHE_KEY, $customCss);
+            Cache::forever($cacheKey, $customCss);
         }
         catch (Exception $ex) {
             $customCss = '/* ' . $ex->getMessage() . ' */';
@@ -163,8 +186,6 @@ class EditorSetting extends Model
 
         $parser->parse($customStyles);
 
-        $css = $parser->getCss();
-
-        return $css;
+        return $parser->getCss();
     }
 }

@@ -11,7 +11,7 @@
 
 class Twig_Extension_Profiler extends Twig_Extension
 {
-    private $actives = array();
+    private $actives = [];
 
     public function __construct(Twig_Profiler_Profile $profile)
     {
@@ -36,11 +36,9 @@ class Twig_Extension_Profiler extends Twig_Extension
 
     public function getNodeVisitors()
     {
-        return array(new Twig_Profiler_NodeVisitor_Profiler(get_class($this)));
-    }
-
-    public function getName()
-    {
-        return 'profiler';
+        return [new Twig_Profiler_NodeVisitor_Profiler(get_class($this))];
     }
 }
+
+class_alias('Twig_Extension_Profiler', 'Twig\Extension\ProfilerExtension', false);
+class_exists('Twig_Profiler_Profile');

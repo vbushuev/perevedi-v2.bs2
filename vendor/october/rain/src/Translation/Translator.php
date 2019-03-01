@@ -1,8 +1,9 @@
 <?php namespace October\Rain\Translation;
 
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Collection;
 use Symfony\Component\Translation\MessageSelector;
-use Symfony\Component\Translation\TranslatorInterface;
+use Illuminate\Contracts\Translation\Translator as TranslatorContract;
 
 /**
  * October translator class.
@@ -10,7 +11,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  * @package translation
  * @author Alexey Bobkov, Samuel Georges
  */
-class Translator implements TranslatorInterface
+class Translator implements TranslatorContract
 {
     use \October\Rain\Support\Traits\KeyParser;
 
@@ -43,6 +44,13 @@ class Translator implements TranslatorInterface
      * @var array
      */
     protected $loaded = [];
+
+    /**
+     * The event dispatcher instance.
+     *
+     * @var \Illuminate\Contracts\Events\Dispatcher|\October\Rain\Events\Dispatcher
+     */
+    protected $events;
 
     /**
      * Create a new translator instance.
@@ -79,6 +87,24 @@ class Translator implements TranslatorInterface
      */
     public function get($key, array $replace = [], $locale = null)
     {
+        /**
+         * @event translator.beforeResolve
+         * Fires before the translator resolves the requested language key
+         *
+         * Example usage (overrides the value returned for a specific language key):
+         *
+         *     Event::listen('translator.beforeResolve', function ((string) $key, (array) $replace, (string|null) $locale) {
+         *         if ($key === 'my.custom.key') {
+         *             return 'My overriding value';
+         *         }
+         *     });
+         *
+         */
+        if (isset($this->events) &&
+            ($line = $this->events->fire('translator.beforeResolve', [$key, $replace, $locale], true))) {
+            return $line;
+        }
+
         if ($line = $this->getValidationSpecific($key, $replace, $locale)) {
             return $line;
         }
@@ -388,4 +414,14 @@ class Translator implements TranslatorInterface
         $this->fallback = $fallback;
     }
 
+    /**
+     * Set the event dispatcher instance.
+     *
+     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
+     * @return void
+     */
+    public function setEventDispatcher(Dispatcher $events)
+    {
+        $this->events = $events;
+    }
 }

@@ -1,12 +1,16 @@
 <?php namespace System\Console;
 
+use App;
 use Lang;
 use File;
 use Config;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use System\Classes\UpdateManager;
 use System\Classes\CombineAssets;
+use Exception;
+use System\Models\Parameter;
 
 /**
  * Console command for other utility commands.
@@ -23,6 +27,8 @@ use System\Classes\CombineAssets;
  * - compile less: Compile registered LESS files only.
  * - compile scss: Compile registered SCSS files only.
  * - compile lang: Compile registered Language files only.
+ * - set build: Pull the latest stable build number from the update gateway and set it as the current build number.
+ * - set project --projectId=<id>: Set the projectId for this october instance.
  *
  * @package october\system
  * @author Alexey Bobkov, Samuel Georges
@@ -43,17 +49,9 @@ class OctoberUtil extends Command
     protected $description = 'Utility commands for October';
 
     /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      */
-    public function fire()
+    public function handle()
     {
         $command = implode(' ', (array) $this->argument('name'));
         $method = 'util'.studly_case($command);
@@ -102,12 +100,42 @@ class OctoberUtil extends Command
         return [
             ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production.'],
             ['debug', null, InputOption::VALUE_NONE, 'Run the operation in debug / development mode.'],
+            ['projectId', null, InputOption::VALUE_REQUIRED, 'Specify a projectId for set project'],
         ];
     }
 
     //
     // Utilties
     //
+
+    protected function utilSetBuild()
+    {
+        $this->comment('-');
+
+        /*
+         * Skip setting the build number if no database is detected to set it within
+         */
+        if (!App::hasDatabase()) {
+            $this->comment('No database detected - skipping setting the build number.');
+            return;
+        }
+
+        try {
+            $build = UpdateManager::instance()->setBuildNumberManually();
+            $this->comment('*** October sets build: '.$build);
+        }
+        catch (Exception $ex) {
+            $this->comment('*** You were kicked from #october by Ex: ('.$ex->getMessage().')');
+        }
+
+        $this->comment('-');
+        sleep(1);
+        $this->comment('Ping? Pong!');
+        $this->comment('-');
+        sleep(1);
+        $this->comment('Ping? Pong!');
+        $this->comment('-');
+    }
 
     protected function utilCompileJs()
     {
@@ -180,6 +208,14 @@ class OctoberUtil extends Command
             $messages = require $fallbackPath;
             if (File::isFile($srcPath) && $fallbackPath != $srcPath) {
                 $messages = array_replace_recursive($messages, require $srcPath);
+            }
+            
+            /*
+             * Load possible replacements from /lang
+             */
+            $overridePath = base_path() . '/lang/'.$locale.'/system/client.php';
+            if (File::isFile($overridePath)) {
+                $messages = array_replace_recursive($messages, require $overridePath);
             }
 
             /*
@@ -293,6 +329,26 @@ class OctoberUtil extends Command
             echo 'Updating theme: '. basename($themeDir) . PHP_EOL;
             echo shell_exec($exec);
         }
+    }
+
+    protected function utilSetProject()
+    {
+        $projectId = $this->option('projectId');
+
+        if (empty($projectId)){
+            $this->error("No projectId defined, use --projectId=<id> to set a projectId");
+            return;
+        }
+
+        $manager = UpdateManager::instance();
+        $result = $manager->requestProjectDetails($projectId);
+
+        Parameter::set([
+            'system::project.id'    => $projectId,
+            'system::project.name'  => $result['name'],
+            'system::project.owner' => $result['owner'],
+        ]);
+
     }
 
 }

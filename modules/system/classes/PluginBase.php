@@ -157,16 +157,18 @@ class PluginBase extends ServiceProviderBase
     /**
      * Registers any report widgets provided by this plugin.
      * The widgets must be returned in the following format:
-     * [
-     *  'className1'=>[
-     *          'label'    => 'My widget 1',
-     *          'context' => ['context-1', 'context-2'],
-     *      ],
-     *  'className2' => [
-     *          'label'    => 'My widget 2',
-     *          'context' => 'context-1'
-     *      ]
-     * ]
+     *
+     *     return [
+     *         'className1'=>[
+     *             'label'    => 'My widget 1',
+     *             'context' => ['context-1', 'context-2'],
+     *         ],
+     *         'className2' => [
+     *             'label'    => 'My widget 2',
+     *             'context' => 'context-1'
+     *         ]
+     *     ];
+     *
      * @return array
      */
     public function registerReportWidgets()
@@ -177,8 +179,12 @@ class PluginBase extends ServiceProviderBase
     /**
      * Registers any form widgets implemented in this plugin.
      * The widgets must be returned in the following format:
-     * ['className1' => 'alias'],
-     * ['className2' => 'anotherAlias']
+     *
+     *     return [
+     *         ['className1' => 'alias'],
+     *         ['className2' => 'anotherAlias']
+     *     ];
+     *
      * @return array
      */
     public function registerFormWidgets()
@@ -197,13 +203,49 @@ class PluginBase extends ServiceProviderBase
     }
 
     /**
+     * Registers any mail layouts implemented by this plugin.
+     * The layouts must be returned in the following format:
+     *
+     *     return [
+     *         'marketing'    => 'acme.blog::layouts.marketing',
+     *         'notification' => 'acme.blog::layouts.notification',
+     *     ];
+     *
+     * @return array
+     */
+    public function registerMailLayouts()
+    {
+        return [];
+    }
+
+    /**
      * Registers any mail templates implemented by this plugin.
      * The templates must be returned in the following format:
-     * ['acme.blog::mail.welcome' => 'This is a description of the welcome template'],
-     * ['acme.blog::mail.forgot_password' => 'This is a description of the forgot password template'],
+     *
+     *     return [
+     *         'acme.blog::mail.welcome',
+     *         'acme.blog::mail.forgot_password',
+     *     ];
+     *
      * @return array
      */
     public function registerMailTemplates()
+    {
+        return [];
+    }
+
+    /**
+     * Registers any mail partials implemented by this plugin.
+     * The partials must be returned in the following format:
+     *
+     *     return [
+     *         'tracking'  => 'acme.blog::partials.tracking',
+     *         'promotion' => 'acme.blog::partials.promotion',
+     *     ];
+     *
+     * @return array
+     */
+    public function registerMailPartials()
     {
         return [];
     }
@@ -218,7 +260,8 @@ class PluginBase extends ServiceProviderBase
     public function registerConsoleCommand($key, $class)
     {
         $key = 'command.'.$key;
-        $this->app[$key] = $this->app->share(function ($app) use ($class) {
+
+        $this->app->singleton($key, function ($app) use ($class) {
             return new $class;
         });
 
@@ -245,9 +288,8 @@ class PluginBase extends ServiceProviderBase
             if ($exceptionMessage) {
                 throw new SystemException($exceptionMessage);
             }
-            else {
-                $this->loadedYamlConfiguration = [];
-            }
+
+            $this->loadedYamlConfiguration = [];
         }
         else {
             $this->loadedYamlConfiguration = Yaml::parse(file_get_contents($yamlFilePath));

@@ -16,7 +16,7 @@ class FlashBag extends MessageBag
     const SUCCESS = 'success';
     const WARNING = 'warning';
 
-    const SESSION_KEY = '_flash';
+    const SESSION_KEY = '_flash_oc';
 
     /**
      * All of the newly registered messages.
@@ -95,9 +95,8 @@ class FlashBag extends MessageBag
         if ($message === null) {
             return $this->get(FlashBag::ERROR);
         }
-        else {
-            return $this->add(FlashBag::ERROR, $message);
-        }
+
+        return $this->add(FlashBag::ERROR, $message);
     }
 
     /**
@@ -110,9 +109,8 @@ class FlashBag extends MessageBag
         if ($message === null) {
             return $this->get(FlashBag::SUCCESS);
         }
-        else {
-            return $this->add(FlashBag::SUCCESS, $message);
-        }
+
+        return $this->add(FlashBag::SUCCESS, $message);
     }
 
     /**
@@ -125,9 +123,8 @@ class FlashBag extends MessageBag
         if ($message === null) {
             return $this->get(FlashBag::WARNING);
         }
-        else {
-            return $this->add(FlashBag::WARNING, $message);
-        }
+
+        return $this->add(FlashBag::WARNING, $message);
     }
 
     /**
@@ -140,9 +137,8 @@ class FlashBag extends MessageBag
         if ($message === null) {
             return $this->get(FlashBag::INFO);
         }
-        else {
-            return $this->add(FlashBag::INFO, $message);
-        }
+
+        return $this->add(FlashBag::INFO, $message);
     }
 
     /**
